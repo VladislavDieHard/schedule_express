@@ -42,7 +42,7 @@ const schedule = {
         itemName.innerHTML = type.name + data.teacher_name;
 
         console.log(document.querySelector('.'+ objectType +'-list').childNodes)
-
+        // Something
         item.append(itemID, itemName);
         document.querySelector('.'+ objectType +'-list').append(item);
     },
