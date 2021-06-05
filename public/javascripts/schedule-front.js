@@ -16,6 +16,7 @@ const schedule = {
     },
 
     createItem(data, objectType) {
+        console.log(data)
         let type;
         if (objectType === 'teachers') {
             type = {
@@ -41,8 +42,6 @@ const schedule = {
         itemName.classList.add('item-name');
         itemName.innerHTML = type.name + data.teacher_name;
 
-        console.log(document.querySelector('.'+ objectType +'-list').childNodes)
-        // Something
         item.append(itemID, itemName);
         document.querySelector('.'+ objectType +'-list').append(item);
     },

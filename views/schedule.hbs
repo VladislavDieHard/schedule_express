@@ -1,8 +1,7 @@
-{{title}}
-
 <script src="javascripts/schedule-front.js"></script>
+<script src="javascripts/fetch-api.js"></script>
 
-<h3>Учителя</h3>
+<h3>{{title}}</h3>
 <div class="teachers-data" data-teachers="{{teachersData}}"></div>
 <div class="lessons-data" data-lessons="{{lessonsData}}"></div>
 <div class="objects">
@@ -20,5 +19,5 @@
         </div>
     </div>
 </div>
-<script onload="scheduleApi(0)"></script>
-<button onclick="scheduleApi(0)"></button>
+<button onclick="scheduleApi(0)">Обновить учителей</button>
+<button onclick="fetchApi()">Отправить POST Fetch</button>

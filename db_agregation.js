@@ -34,13 +34,17 @@ function dbConnect(sql, some = true) {
     });
 }
 
+async function insertData() {
+
+}
+
 async function updateData() {
 
 }
 
-async function getData(sql, some) {
-    let data = await dbConnect(sql, some);
-    return data;
+async function getData(object, some) {
+    let customSQL = 'SELECT * FROM ' + object;
+    return await dbConnect(customSQL, some);
 }
 
-exports.db = getData;
+exports.get = getData;
