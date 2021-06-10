@@ -1,6 +1,6 @@
 async function fetchApi() {
     let teacher = {
-        id: 1,
+        id: 2,
         name: 'NAME'
     }
 
