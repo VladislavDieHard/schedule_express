@@ -1,0 +1,26 @@
+.enter-template {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 250px;
+  height: 300px;
+  margin: auto;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.18), 0 2px 10px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 5px; }
+
+.login {
+  display: flex;
+  flex-direction: column; }
+
+.password {
+  display: flex;
+  flex-direction: column; }
+
+.err-text {
+  color: #ff3333;
+  display: flex;
+  justify-content: center;
+  margin: 40px 0; }
+
+/*# sourceMappingURL=enter-template.css.map */
