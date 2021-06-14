@@ -1,29 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const dbApi = require('../db_agregation');
+const auth = require('../auth_module');
 
-router.get('/', function(req, res, next) {
-    const userAdmin = JSON.parse(fs.readFileSync('./settings/settings.json', 'utf8'));
-    const auth = req.query;
-    if (auth.token === userAdmin.token) {
-        res.render('admin', {title: 'admin-dash'});
+router.get('/', async function(req, res, next) {
+    const token = req.cookies.adminToken;
+
+    if (token !== undefined) {
+        const authenticated = await auth.authUser(token, true);
+        if (authenticated.verify) {
+            res.redirect('/admin_dash');
+        } else {
+            res.render('admin', { title: 'Войдите в систему' });
+        }
     } else {
-        res.render('admin-auth', {title: 'admin-auth'});
+        res.render('admin', { title: 'Войдите в систему' });
     }
 });
 
-router.post('/', function(req, res, next) {
-    try {
-        const userAdmin = JSON.parse(fs.readFileSync('./settings/settings.json', 'utf8'));
-        const userAdminLogin = req.body;
-        if (userAdmin.login === userAdminLogin.login && userAdmin.password === userAdminLogin.password) {
-            res.send(`/admin?token=${userAdmin.token}`);
-        } else {
-            res.send('err');
-        }
-    } catch (e) {
-        throw e;
+router.post('/', async function(req, res, next) {
+    const user = req.body;
+    const token = await auth.auth(user, true);
+
+    if (token !== null) {
+        res.send(token);
+    } else {
+        res.send(null);
     }
 });
 

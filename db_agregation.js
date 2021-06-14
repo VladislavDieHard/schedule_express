@@ -2,13 +2,13 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('db.sqlite3');
 
 const dbApi = {
-    dbConnect(sql, some = true) {
+    dbGet(sql, some = true) {
         return new Promise((resolve, reject) => {
             let data = [];
             if (some) {
                 db.all(sql, (err, rows) => {
                     if (err) {
-                        return reject(err);
+                        return reject(!err);
                     }
                     data = rows;
                     resolve(data);
@@ -16,7 +16,7 @@ const dbApi = {
             } else {
                 db.get(sql, (err, row) => {
                     if (err) {
-                        console.log(err);
+                        return reject(!err);
                     }
                     data = row;
                     resolve(data);
@@ -25,32 +25,111 @@ const dbApi = {
         });
     },
 
-    async addSession(data) {
-        let customSQL = (`INSERT INTO user_sessions (login, token, date, relation)
+    // Updates
+
+    async updatePassword(password, login) {
+        let customSQL = `UPDATE users SET password=${password} WHERE login=${login}`
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    },
+
+    async updateData(table, data, id) {
+        let customSQL = `
+        UPDATE ${table}
+         
+        SET
+         name=${data.name},
+          is_deleted=${data.is_deleted}
+          
+        WHERE id=${id}`;
+
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    },
+
+    async updateRelation(relation, data, id) {
+        let customSQL = `
+        UPDATE relations_${relation}
+         
+        SET
+         class=${data.class},
+          teacher=${data.teacher},
+           lesson=${data.lesson},
+            hours=${data.hours}
+           
+        WHERE relation_id=${id}`;
+
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    },
+
+    //
+
+    async addUserSession(data, admin) {
+        let table;
+        if (admin) {
+            table = 'moderator_sessions';
+        } else {
+            table = 'user_sessions';
+        }
+        let customSQL = (`INSERT INTO ${table} (login, token, date, relation)
      VALUES (
      '${data.login}',
       '${data.token}',
        '${data.date}',
         '${data.relation}')`
         );
-        db.run(customSQL);
+        db.run(customSQL, (err) => {
+            return !err;
+        });
     },
 
-    async getToken(token) {
-        let customSQL = `SELECT * FROM user_sessions WHERE token = '${token}'`;
-        return await this.dbConnect(customSQL, true);
+    async getAllTablesData(relation) {
+        const objectTypes = ['teachers', 'classes', 'lessons'];
+        let data = [];
+        for (let i = 0; i <= objectTypes.length - 1; i++) {
+            let customSQL = `SELECT * FROM ${objectTypes[i]}_${relation}`;
+            data.push(await this.dbGet(customSQL, true));
+        }
+        return data;
+    },
+
+    async getUserToken(token, admin) {
+        let table;
+        if (admin) {
+            table = 'moderator_sessions';
+        } else {
+            table = 'user_sessions';
+        }
+        let customSQL = `SELECT * FROM ${table} WHERE token = '${token}'`;
+        return await this.dbGet(customSQL, true);
     },
 
     async getUser(login) {
         let customSQL = `SELECT * FROM users WHERE login = '${login}'`;
-        return await this.dbConnect(customSQL, false);
+        return await this.dbGet(customSQL, false);
     },
 
     async getData(object, some) {
         let customSQL = 'SELECT * FROM ' + object;
-        return await this.dbConnect(customSQL, some);
+        return await this.dbGet(customSQL, some);
     },
 
+    async createUser(user) {
+        let customSQL = (`INSERT INTO users (username, login, password, relation)
+        VALUES (
+         '${user.username}',
+          '${user.login}',
+           '${user.password}',
+            '${user.relation}')`
+            );
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    }
 }
 
 module.exports = dbApi;

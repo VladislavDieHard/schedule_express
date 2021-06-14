@@ -4,8 +4,13 @@ const fs = require('fs');
 const settings = JSON.parse(fs.readFileSync('./settings/settings.json', 'utf8'));
 
 const auth = {
-    async auth(user) {
-        const users = await dbApi.getData('users');
+    async auth(user, admin = false) {
+        let users;
+        if (admin) {
+            users = await dbApi.getData('moderators', true);
+        } else {
+            users = await dbApi.getData('users', true);
+        }
         let token;
 
         let authUser;
@@ -27,7 +32,7 @@ const auth = {
                     date: new Date().toISOString(),
                     relation: authUser.relation
                 }
-                await dbApi.addSession(data);
+                await dbApi.addUserSession(data, admin);
             } else {
                 token = null;
             }
@@ -38,13 +43,13 @@ const auth = {
         return token;
     },
 
-    async authUser(token) {
-        const session = await dbApi.getToken(token);
-        const sessionTime = 1000 * 60 * settings.sessionTime;
-        const sessionDate = +new Date(session[0].date);
-        const now = +new Date();
-        let authenticated = {}
-        if (session !== null) {
+    async authUser(token, admin = false) {
+        const session = await dbApi.getUserToken(token, admin);
+        let authenticated = {};
+        if (session[0] !== undefined) {
+            const sessionTime = 1000 * 60 * settings.sessionTime;
+            const sessionDate = +new Date(session[0].date);
+            const now = +new Date();
             if (((now - sessionDate) / 1000 / 60) <= (sessionTime / 1000 / 60)) {
                 authenticated.verify = true;
                 authenticated.relation = session[0].relation;

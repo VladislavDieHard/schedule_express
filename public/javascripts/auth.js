@@ -27,12 +27,11 @@ const auth = {
 
         let result = await response.text();
 
-        if (result === 'err') {
+        if (result === 'null') {
             document.querySelector('.err-text').innerHTML = 'Вы ввели неверный логин или пароль'
         } else {
-            document.cookies = `login:${this.login}; password:${this.password}`;
-            console.log(document.cookies);
-            document.location.href = result;
+            document.cookie = `token=${result}`;
+            document.location.href = '/schedule';
         }
     },
 

@@ -30,7 +30,8 @@ const auth = {
         if (result === 'err') {
             document.querySelector('.err-text').innerHTML = 'Вы ввели неверный логин или пароль'
         } else {
-            document.location.href = result;
+            document.cookie = `adminToken=${result}`;
+            document.location.href = '/admin_dash';
         }
     },
 

@@ -1,0 +1,16 @@
+<link rel='stylesheet' href='/stylesheets/enter-template.css' />
+<script src="javascripts/admin-auth.js"></script>
+
+<div class="enter-template">
+    <h2>Войдите в систему</h2>
+    <div class="login">
+        <label for="login">Логин</label>
+        <input id="login" type="text" oninput="authApi(this, 0)">
+    </div>
+    <div class="password">
+        <label for="password">Пароль</label>
+        <input id="password" type="password" oninput="authApi(this, 0)">
+    </div>
+    <button onclick="authApi(this, 1)">Войти</button>
+</div>
+<h3 class="err-text"></h3>

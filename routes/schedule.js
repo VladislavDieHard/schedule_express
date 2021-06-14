@@ -5,9 +5,10 @@ const auth = require('../auth_module');
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-    const token = req.query.token;
+    const token = req.cookies.token;
+
     if (token !== undefined) {
-        const authenticated = await auth.authUser(token);
+        const authenticated = await auth.authUser(token, false);
         if (authenticated.verify) {
             let teachers = await dbApi.getData(`teachers_${authenticated.relation}`, true);
             let lessons = await dbApi.getData(`lessons_${authenticated.relation}`, true);

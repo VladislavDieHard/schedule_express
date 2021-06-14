@@ -110,3 +110,5 @@ dist
 .map
 
 .sass-cache/
+
+db.sqlite3
