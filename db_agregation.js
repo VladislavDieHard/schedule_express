@@ -105,7 +105,7 @@ const dbApi = {
             table = 'user_sessions';
         }
         let customSQL = `SELECT * FROM ${table} WHERE token = '${token}'`;
-        return await this.dbGet(customSQL, true);
+        return await this.dbGet(customSQL, false);
     },
 
     async getUser(login) {
@@ -113,9 +113,10 @@ const dbApi = {
         return await this.dbGet(customSQL, false);
     },
 
-    async getData(object, some) {
-        let customSQL = 'SELECT * FROM ' + object;
-        return await this.dbGet(customSQL, some);
+    async getData(model, user) {
+        let rel = await this.userRelations(user);
+        let customSQL = `SELECT * FROM ${model}_${rel}`;
+        return await this.dbGet(customSQL, true);
     },
 
     async createUser(user) {
@@ -126,6 +127,23 @@ const dbApi = {
            '${user.password}',
             '${user.relation}')`
             );
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    },
+
+    async userRelations(user) {
+        let customSQL = (`SELECT relation FROM users WHERE login = '${user}'`);
+        return await this.dbGet(customSQL, false);
+    },
+
+    async addModel(model, data, user) {
+        let rel = await this.userRelations(user);
+        let customSQL = (`INSERT INTO ${model}_${rel} (name)
+        VALUES (
+         '${data}');`
+        );
+
         db.run(customSQL, (err) => {
             return !err;
         });
