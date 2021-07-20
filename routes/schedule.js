@@ -14,7 +14,6 @@ router.get('/', async function(req, res, next) {
             let teachers = objProcessor(authenticated.relation, 'teachers');
             let lessons = objProcessor(authenticated.relation, 'lessons');
             let classes = objProcessor(authenticated.relation, 'classes');
-            // let lessons = await dbApi.getData(`lessons_${authenticated.relation}`, true);
 
             res.render('schedule',{
                 title: 'Расписание',

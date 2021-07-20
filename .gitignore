@@ -103,12 +103,11 @@ dist
 # TernJS port file
 .tern-port
 
-*.map
+.sass-cache/
+*.css.map
 
 .settings/
 
-.map
+*.sqlite3
 
-.sass-cache/
-
-db.sqlite3
+*.xml

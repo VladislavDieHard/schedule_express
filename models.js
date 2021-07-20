@@ -15,19 +15,19 @@ const Models = {
 }
 
 const Lesson = {
-    model: 'lessons'
+    model: 'lessons',
 }
 
 Lesson.__proto__ = Models;
 
 const Class = {
-    model: 'classes'
+    model: 'classes',
 }
 
 Class.__proto__ = Models;
 
 const Teacher = {
-    model: 'teachers'
+    model: 'teachers',
 }
 
 Teacher.__proto__ = Models;

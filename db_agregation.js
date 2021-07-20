@@ -49,23 +49,6 @@ const dbApi = {
         });
     },
 
-    async updateRelation(relation, data, id) {
-        let customSQL = `
-        UPDATE relations_${relation}
-         
-        SET
-         class=${data.class},
-          teacher=${data.teacher},
-           lesson=${data.lesson},
-            hours=${data.hours}
-           
-        WHERE relation_id=${id}`;
-
-        db.run(customSQL, (err) => {
-            return !err;
-        });
-    },
-
     //
 
     async addUserSession(data, admin) {
@@ -113,12 +96,6 @@ const dbApi = {
         return await this.dbGet(customSQL, false);
     },
 
-    async getData(model, user) {
-        let rel = await this.userRelations(user);
-        let customSQL = `SELECT * FROM ${model}_${rel}`;
-        return await this.dbGet(customSQL, true);
-    },
-
     async createUser(user) {
         let customSQL = (`INSERT INTO users (username, login, password, relation)
         VALUES (
@@ -132,13 +109,10 @@ const dbApi = {
         });
     },
 
-    async userRelations(user) {
-        let customSQL = (`SELECT relation FROM users WHERE login = '${user}'`);
-        return await this.dbGet(customSQL, false);
-    },
+    ///// Models methods
 
     async addModel(model, data, user) {
-        let rel = await this.userRelations(user);
+        let rel = await this.getUserRelations(user);
         let customSQL = (`INSERT INTO ${model}_${rel} (name)
         VALUES (
          '${data}');`
@@ -147,7 +121,54 @@ const dbApi = {
         db.run(customSQL, (err) => {
             return !err;
         });
-    }
+    },
+
+    async getData(model, user) {
+        let rel = await this.getUserRelations(user);
+        let customSQL = `SELECT * FROM ${model}_${rel}`;
+        return await this.dbGet(customSQL, true);
+    },
+
+    /////
+
+    ///// Relations methods
+
+    async relationGet() {
+
+    },
+
+    async relationClassAdd(model, data, user) {
+        let rel = await this.getUserRelations(user);
+        let customSQL = (`INSERT INTO ${model}_${rel} ()
+        VALUES (
+         '${data}');`
+        );
+
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    },
+
+    async relationTeacherAdd(model, data, user) {
+        let rel = await this.getUserRelations(user);
+        let customSQL = (`INSERT INTO ${model}_${rel} ()
+        VALUES (
+         '${data}');`
+        );
+
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    },
+
+    /////
+
+    ///// Service methods
+
+    async getUserRelations(user) {
+        let customSQL = (`SELECT relation FROM users WHERE login = '${user}'`);
+        return await this.dbGet(customSQL, false);
+    },
 }
 
 module.exports = dbApi;
