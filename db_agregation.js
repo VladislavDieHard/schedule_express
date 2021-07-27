@@ -133,15 +133,19 @@ const dbApi = {
 
     ///// Relations methods
 
-    async relationGet() {
-
+    async relationGet(user, table, model, id) {
+        let rel = await this.getUserRelations(user);
+        let customSQL = (`SELECT * FROM ${table}_${rel} WHERE ${model}=${id}`);
+        return await this.dbGet(customSQL, true);
     },
 
-    async relationClassAdd(model, data, user) {
+    async relationClassAdd(table, data, user) {
         let rel = await this.getUserRelations(user);
-        let customSQL = (`INSERT INTO ${model}_${rel} ()
+        let customSQL = (`INSERT INTO ${table}_${rel} (class, lesson, hours)
         VALUES (
-         '${data}');`
+         '${data.class}',
+         '${data.lesson}',
+         '${data.hours}')`
         );
 
         db.run(customSQL, (err) => {
@@ -149,11 +153,12 @@ const dbApi = {
         });
     },
 
-    async relationTeacherAdd(model, data, user) {
+    async relationTeacherAdd(table, data, user) {
         let rel = await this.getUserRelations(user);
-        let customSQL = (`INSERT INTO ${model}_${rel} ()
+        let customSQL = (`INSERT INTO ${table}_${rel} (teacher, lesson)
         VALUES (
-         '${data}');`
+         '${data.teacher}',
+         '${data.lesson}')`
         );
 
         db.run(customSQL, (err) => {

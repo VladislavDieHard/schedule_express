@@ -11,9 +11,10 @@ router.get('/', async function(req, res, next) {
     if (token !== undefined) {
         const authenticated = await auth.authUser(token, false);
         if (authenticated.verify) {
+            let classes;
             let teachers = objProcessor(authenticated.relation, 'teachers');
             let lessons = objProcessor(authenticated.relation, 'lessons');
-            let classes = objProcessor(authenticated.relation, 'classes');
+
 
             res.render('schedule',{
                 title: 'Расписание',
