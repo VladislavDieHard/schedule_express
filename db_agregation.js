@@ -8,7 +8,7 @@ const dbApi = {
             if (some) {
                 db.all(sql, (err, rows) => {
                     if (err) {
-                        return reject(!err);
+                        return reject(err);
                     }
                     data = rows;
                     resolve(data);
@@ -16,7 +16,7 @@ const dbApi = {
             } else {
                 db.get(sql, (err, row) => {
                     if (err) {
-                        return reject(!err);
+                        return reject(err);
                     }
                     data = row;
                     resolve(data);
@@ -113,7 +113,7 @@ const dbApi = {
 
     async addModel(model, data, user) {
         let rel = await this.getUserRelations(user);
-        let customSQL = (`INSERT INTO ${model}_${rel} (name)
+        let customSQL = (`INSERT INTO ${model}_${rel.relation} (name)
         VALUES (
          '${data}');`
         );
@@ -123,9 +123,9 @@ const dbApi = {
         });
     },
 
-    async getData(model, user) {
+    async getData(user, model) {
         let rel = await this.getUserRelations(user);
-        let customSQL = `SELECT * FROM ${model}_${rel}`;
+        let customSQL = `SELECT * FROM ${model}_${rel.relation}`;
         return await this.dbGet(customSQL, true);
     },
 
@@ -133,15 +133,15 @@ const dbApi = {
 
     ///// Relations methods
 
-    async relationGet(user, table, model, id) {
+    async relationGet(user, table) {
         let rel = await this.getUserRelations(user);
-        let customSQL = (`SELECT * FROM ${table}_${rel} WHERE ${model}=${id}`);
+        let customSQL = (`SELECT * FROM ${table}_${rel.relation}`);
         return await this.dbGet(customSQL, true);
     },
 
     async relationClassAdd(table, data, user) {
         let rel = await this.getUserRelations(user);
-        let customSQL = (`INSERT INTO ${table}_${rel} (class, lesson, hours)
+        let customSQL = (`INSERT INTO ${table}_${rel.relation} (class, lesson, hours)
         VALUES (
          '${data.class}',
          '${data.lesson}',
@@ -155,7 +155,7 @@ const dbApi = {
 
     async relationTeacherAdd(table, data, user) {
         let rel = await this.getUserRelations(user);
-        let customSQL = (`INSERT INTO ${table}_${rel} (teacher, lesson)
+        let customSQL = (`INSERT INTO ${table}_${rel.relation} (teacher, lesson)
         VALUES (
          '${data.teacher}',
          '${data.lesson}')`

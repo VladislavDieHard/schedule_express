@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const dbApi = require('../db_agregation');
-const objProcessor = require('../object_processing');
 const auth = require('../auth_module');
+const models = require('../models')
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
     const token = req.cookies.token;
-
     if (token !== undefined) {
         const authenticated = await auth.authUser(token, false);
         if (authenticated.verify) {
-            let classes;
-            let teachers = objProcessor(authenticated.relation, 'teachers');
-            let lessons = objProcessor(authenticated.relation, 'lessons');
+            let classes = await models.Class.getData(authenticated.login);
+            let teachers = await models.Teacher.getData(authenticated.login);
+            let lessons = await models.Lesson.getRawData(authenticated.login);
 
 
             res.render('schedule',{

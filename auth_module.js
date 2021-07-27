@@ -5,32 +5,23 @@ const settings = JSON.parse(fs.readFileSync('./settings/settings.json', 'utf8'))
 
 const auth = {
     async auth(user, admin = false) {
-        let users;
+        let userDB;
         if (admin) {
-            users = await dbApi.getData('moderators', true);
+            userDB = await dbApi.getUser('moderators', true);
         } else {
-            users = await dbApi.getData('users', true);
+            userDB = await dbApi.getUser(user.login, true);
         }
+
         let token;
-
-        let authUser;
-        users.forEach((item) => {
-            if (item.login === user.login) {
-                authUser = item;
-            } else {
-                authUser = null;
-            }
-        });
-
-        if (authUser !== null) {
-            let password = this.decipherPass(authUser.password);
+        if (userDB !== null) {
+            let password = this.decipherPass(userDB.password);
             if (user.password === password) {
                 token = this.createToken(user);
                 let data = {
-                    login: authUser.login,
+                    login: userDB.login,
                     token: token,
                     date: new Date().toISOString(),
-                    relation: authUser.relation
+                    relation: userDB.relation
                 }
                 await dbApi.addUserSession(data, admin);
             } else {
@@ -46,13 +37,13 @@ const auth = {
     async authUser(token, admin = false) {
         const session = await dbApi.getUserToken(token, admin);
         let authenticated = {};
-        if (session[0] !== undefined) {
+        if (session !== undefined) {
             const sessionTime = 1000 * 60 * settings.sessionTime;
-            const sessionDate = +new Date(session[0].date);
+            const sessionDate = +new Date(session.date);
             const now = +new Date();
             if (((now - sessionDate) / 1000 / 60) <= (sessionTime / 1000 / 60)) {
                 authenticated.verify = true;
-                authenticated.relation = session[0].relation;
+                authenticated.login = session.login;
                 return authenticated
             } else {
                 authenticated.verify = false;
