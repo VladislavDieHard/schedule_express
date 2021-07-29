@@ -17,6 +17,7 @@ router.get('/', async function(req, res, next) {
 
             res.render('schedule',{
                 title: 'Расписание',
+                login: authenticated.login,
                 teachersData: JSON.stringify(teachers),
                 lessonsData: JSON.stringify(lessons),
                 classesData: JSON.stringify(classes),
@@ -29,9 +30,23 @@ router.get('/', async function(req, res, next) {
     }
 });
 
-router.post('/', async function(req, res, next) {
-    let user = await dbApi.getData('users', true);
-    res.send(user);
+router.post('/', async function(req, res, next) { // 0 = init, 1 = refresh data, 2 = add item to db
+    let result;
+    if (req.body.call === 2) {
+        const types = [
+            ['Учитель', models.Teacher],
+            ['Урок', models.Lesson],
+            ['Класс', models.Class]
+        ]
+
+        types.forEach((item) => {
+            if (item[0] === req.body.type) {
+                result = item[1].addItem(req.body.data, req.body.user);
+            }
+        });
+    }
+
+    res.send(result);
 })
 
 module.exports = router;

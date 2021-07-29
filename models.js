@@ -2,7 +2,7 @@ const dbApi = require('./db_agregation');
 
 const Models = {
     async addItem(data, user) {
-        return await dbApi.addModel(this.model, data, user);
+        return await dbApi.addModel(this.tableModel, data, user);
     },
 
     async getRawData(user) {
