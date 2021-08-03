@@ -23,8 +23,16 @@ const Teacher = {
 
 Teacher.__proto__ = modelsModule;
 
+const User = {
+    models: 'user',
+    tableModel: 'users'
+}
+
+User.__proto__ = modelsModule;
+
 module.exports = {
     Lesson: Lesson,
     Class: Class,
     Teacher: Teacher,
+    User: User,
 };

@@ -30,7 +30,17 @@ const Models = {
             }
         });
         return data;
-    }
+    },
+
+    /// Users model
+
+    async getUsersData() {
+        return await dbApi.getData(this.tableModel);
+    },
+
+    async createUser(data) {
+        return await dbApi.createUser(data);
+    },
 }
 
 module.exports = Models;

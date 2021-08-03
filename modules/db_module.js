@@ -25,6 +25,14 @@ const dbApi = {
         });
     },
 
+    dbUpdate(table, data) {
+
+    },
+
+    dbAdd() {
+
+    },
+
     // Updates
 
     async updatePassword(password, login) {
@@ -152,13 +160,13 @@ const dbApi = {
         return await this.dbGet(customSQL, false);
     },
 
-    async createUser(user) {
+    async createUser(data) {
         let customSQL = (`INSERT INTO users (username, login, password, relation)
         VALUES (
-         '${user.username}',
-          '${user.login}',
-           '${user.password}',
-            '${user.relation}')`
+         '${data.username}',
+          '${data.login}',
+           '${data.password}',
+            '${data.relation}')`
         );
         db.run(customSQL, (err) => {
             return !err;
