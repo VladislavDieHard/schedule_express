@@ -1,4 +1,4 @@
-const dbApi = require('./db_agregation');
+const dbApi = require('./db_module');
 
 const Models = {
     async addItem(data, user) {
@@ -33,31 +33,4 @@ const Models = {
     }
 }
 
-const Lesson = {
-    model: 'lesson',
-    tableModel: 'lessons'
-}
-
-Lesson.__proto__ = Models;
-
-const Class = {
-    model: 'class',
-    tableModel: 'classes',
-    relationModel: 'class_to_lesson'
-}
-
-Class.__proto__ = Models;
-
-const Teacher = {
-    model: 'teacher',
-    tableModel: 'teachers',
-    relationModel: 'teacher_to_lesson'
-}
-
-Teacher.__proto__ = Models;
-
-module.exports = {
-    Lesson: Lesson,
-    Class: Class,
-    Teacher: Teacher,
-};
+module.exports = Models;

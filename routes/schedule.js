@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const dbApi = require('../db_agregation');
-const auth = require('../auth_module');
-const models = require('../models')
+const auth = require('../modules/auth_module');
+const models = require('../models/models')
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {

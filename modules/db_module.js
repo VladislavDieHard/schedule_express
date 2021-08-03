@@ -51,25 +51,6 @@ const dbApi = {
 
     //
 
-    async addUserSession(data, admin) {
-        let table;
-        if (admin) {
-            table = 'moderator_sessions';
-        } else {
-            table = 'user_sessions';
-        }
-        let customSQL = (`INSERT INTO ${table} (login, token, date, relation)
-     VALUES (
-     '${data.login}',
-      '${data.token}',
-       '${data.date}',
-        '${data.relation}')`
-        );
-        db.run(customSQL, (err) => {
-            return !err;
-        });
-    },
-
     async getAllTablesData(relation) {
         const objectTypes = ['teachers', 'classes', 'lessons'];
         let data = [];
@@ -78,35 +59,6 @@ const dbApi = {
             data.push(await this.dbGet(customSQL, true));
         }
         return data;
-    },
-
-    async getUserToken(token, admin) {
-        let table;
-        if (admin) {
-            table = 'moderator_sessions';
-        } else {
-            table = 'user_sessions';
-        }
-        let customSQL = `SELECT * FROM ${table} WHERE token = '${token}'`;
-        return await this.dbGet(customSQL, false);
-    },
-
-    async getUser(login) {
-        let customSQL = `SELECT * FROM users WHERE login = '${login}'`;
-        return await this.dbGet(customSQL, false);
-    },
-
-    async createUser(user) {
-        let customSQL = (`INSERT INTO users (username, login, password, relation)
-        VALUES (
-         '${user.username}',
-          '${user.login}',
-           '${user.password}',
-            '${user.relation}')`
-            );
-        db.run(customSQL, (err) => {
-            return !err;
-        });
     },
 
     ///// Models methods
@@ -173,6 +125,63 @@ const dbApi = {
     async getUserRelations(user) {
         let customSQL = (`SELECT relation FROM users WHERE login = '${user}'`);
         return await this.dbGet(customSQL, false);
+    },
+
+    /////
+
+    ///// Auth methods
+
+    async getUser(login) {
+        let customSQL = `SELECT * FROM users WHERE login = '${login}'`;
+        return await this.dbGet(customSQL, false);
+    },
+
+    async getModerator(login) {
+        let customSQL = `SELECT * FROM moderators WHERE login = '${login}'`;
+        return await this.dbGet(customSQL, false);
+    },
+
+    async getUserToken(token, admin) {
+        let table;
+        if (admin) {
+            table = 'moderator_sessions';
+        } else {
+            table = 'user_sessions';
+        }
+        let customSQL = `SELECT * FROM ${table} WHERE token = '${token}'`;
+        return await this.dbGet(customSQL, false);
+    },
+
+    async createUser(user) {
+        let customSQL = (`INSERT INTO users (username, login, password, relation)
+        VALUES (
+         '${user.username}',
+          '${user.login}',
+           '${user.password}',
+            '${user.relation}')`
+        );
+        db.run(customSQL, (err) => {
+            return !err;
+        });
+    },
+
+    async addUserSession(data, admin) {
+        let table;
+        if (admin) {
+            table = 'moderator_sessions';
+        } else {
+            table = 'user_sessions';
+        }
+        let customSQL = (`INSERT INTO ${table} (login, token, date, relation)
+     VALUES (
+     '${data.login}',
+      '${data.token}',
+       '${data.date}',
+        '${data.relation}')`
+        );
+        db.run(customSQL, (err) => {
+            return !err;
+        });
     },
 }
 

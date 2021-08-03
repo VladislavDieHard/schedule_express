@@ -1,4 +1,4 @@
-const dbApi = require('./db_agregation');
+const dbApi = require('./db_module');
 const crypto = require('crypto');
 const fs = require('fs');
 const settings = JSON.parse(fs.readFileSync('./settings/settings.json', 'utf8'));
@@ -7,7 +7,7 @@ const auth = {
     async auth(user, admin = false) {
         let userDB;
         if (admin) {
-            userDB = await dbApi.getUser('moderators', true);
+            userDB = await dbApi.getModerator(user.login, true);
         } else {
             userDB = await dbApi.getUser(user.login, true);
         }
@@ -23,7 +23,11 @@ const auth = {
                     date: new Date().toISOString(),
                     relation: userDB.relation
                 }
-                await dbApi.addUserSession(data, admin);
+                if (admin === false) {
+                    await dbApi.addUserSession(data, admin);
+                } else {
+                    await dbApi.addUserSession(data, admin);
+                }
             } else {
                 token = null;
             }

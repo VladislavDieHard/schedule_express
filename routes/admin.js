@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../auth_module');
+const auth = require('../modules/auth_module');
 
 router.get('/', async function(req, res, next) {
     const token = req.cookies.adminToken;

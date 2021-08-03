@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const dbApi = require('../db_agregation');
-const auth = require('../auth_module');
+const dbApi = require('../modules/db_module');
+const auth = require('../modules/auth_module');
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -10,19 +10,19 @@ router.get('/', async function(req, res, next) {
     if (token !== undefined) {
         const authenticated = await auth.authUser(token, true);
         if (authenticated.verify) {
-            let users = await dbApi.getData('users', true);
-            let userList = [];
-            for (let i = 0; i <= users.length - 1; i++) {
-                let user = {};
-                user.id = users[i].id;
-                user.username = users[i].username;
-                user.login = users[i].login;
-                user.relation = users[i].relation;
-                userList.push(user);
-            }
+            // let users = await dbApi.getData('users', true); FIX IT!!!
+            // let userList = [];
+            // for (let i = 0; i <= users.length - 1; i++) {
+            //     let user = {};
+            //     user.id = users[i].id;
+            //     user.username = users[i].username;
+            //     user.login = users[i].login;
+            //     user.relation = users[i].relation;
+            //     userList.push(user);
+            // }
             res.render('admin_dash',{
                 title: 'admin dash',
-                users: JSON.stringify(userList)
+                // users: JSON.stringify(userList)
             });
         } else {
             res.redirect('/admin');
