@@ -1,9 +1,10 @@
 <script src="javascripts/schedule-front.js"></script>
-<script src="javascripts/fetch-api.js"></script>
 
 <h3>{{title}}</h3>
+<h3 class="user-login">{{login}}</h3>
 <div class="teachers-data" data-teachers="{{teachersData}}"></div>
 <div class="lessons-data" data-lessons="{{lessonsData}}"></div>
+<div class="classes-data" data-classes="{{classesData}}"></div>
 <div class="objects">
     <div class="objects-switch-buttons">
         <button class="teachers-button objects-button"><i class="fas fa-user"></i>Учителя</button>
@@ -20,4 +21,13 @@
     </div>
 </div>
 <button onclick="scheduleApi(0)">Обновить учителей</button>
-<button onclick="fetchApi()">Отправить POST Fetch</button>
+<div class="add-item-to-db">
+    <input class="item-type" list="item-type">
+    <datalist id="item-type">
+        <option value="Учитель">
+        <option value="Урок">
+        <option value="Класс">
+    </datalist>
+    <input type="text" class="add-item-to-db-input">
+    <button onclick="scheduleApi(2)">Добавить</button>
+</div>

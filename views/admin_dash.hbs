@@ -1,0 +1,78 @@
+<link rel='stylesheet' href='/stylesheets/admin-dash.css' />
+<script src="javascripts/admindash-front.js"></script>
+
+<div class="wrapper">
+    <header class="header">
+        <div class="user-input">
+            <h4>Получить данные пользователя</h4>
+            <input list="users" class="user-choose">
+            <datalist id="users" class="users-datalist"></datalist>
+            <button onclick="admindashInit()" class="get-user-data">Get</button>
+        </div>
+    </header>
+    <div class="content">
+        <div class="buttons-objects">
+            <button onclick="adminDashApi(0, this)" class="teachers-btn btn">teachers</button>
+            <button onclick="adminDashApi(0, this)" class="classes-btn btn">classes</button>
+            <button onclick="adminDashApi(0, this)" class="lessons-btn btn">lessons</button>
+            <button onclick="adminDashApi(0, this)" class="update-btn btn">update</button>
+            <button onclick="adminDashApi(0, this)" class="add-btn btn">add</button>
+        </div>
+        <div class="object-content">
+            <div class="teachers object-item object-item-active">
+                <ul class="teacher-list">
+                    <li class="teacher-item"></li>
+                    <li class="teacher-item"></li>
+                    <li class="teacher-item"></li>
+                </ul>
+            </div>
+            <div class="classes object-item">
+                <ul class="classes-list">
+                    <li class="class-item"></li>
+                    <li class="class-item"></li>
+                    <li class="class-item"></li>
+                </ul>
+            </div>
+            <div class="lessons object-item">
+                <ul class="lessons-list">
+                    <li class="lesson-item"></li>
+                    <li class="lesson-item"></li>
+                    <li class="lesson-item"></li>
+                </ul>
+            </div>
+            <div class="update object-item">
+                <div class="update-input">
+                    <input list="objects">
+                    <datalist id="objects">
+                        <option value=""></option>
+                    </datalist>
+                    <button class="update-change-btn">Change on</button>
+                </div>
+                <div class="update-menu">
+                    <div class="update-list">
+                        <ul class="update-object-list">
+                            <li class="update-object-item"></li>
+                        </ul>
+                    </div>
+                    <div class="update-item">
+                        <h3>Item fields</h3>
+                        <div class="input-fields">
+                            <input class="" type="text">
+                        </div>
+                        <button class="update-btn">Update it</button>
+                    </div>
+                </div>
+            </div>
+            <div class="add object-item">
+                div.
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+
+    </footer>
+    <div class="data">
+        <div class="data-users" data-users="{{users}}"></div>
+    </div>
+    <script onload="admindashInit()"></script>
+</div>
