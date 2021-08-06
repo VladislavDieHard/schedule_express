@@ -18,14 +18,14 @@ Class.__proto__ = modelsModule;
 const Teacher = {
     model: 'teacher',
     tableModel: 'teachers',
-    relationModel: 'teacher_to_lesson'
+    relationModel: 'teacher_to_lesson',
 }
 
 Teacher.__proto__ = modelsModule;
 
 const User = {
-    models: 'user',
-    tableModel: 'users'
+    model: 'user',
+    tableModel: 'users',
 }
 
 User.__proto__ = modelsModule;

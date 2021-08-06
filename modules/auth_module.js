@@ -1,33 +1,29 @@
-const dbApi = require('./db_module');
+const dbApi = require('../db_module');
 const crypto = require('crypto');
 const fs = require('fs');
 const settings = JSON.parse(fs.readFileSync('./settings/settings.json', 'utf8'));
 
 const auth = {
-    async auth(user, admin = false) {
+    authDB: dbApi.auth,
+
+    async auth(user, isAdmin = false) {
         let userDB;
-        if (admin) {
-            userDB = await dbApi.getModerator(user.login, true);
-        } else {
-            userDB = await dbApi.getUser(user.login, true);
-        }
+        userDB = await this.authDB.getUser(user.login, isAdmin);
 
         let token;
-        if (userDB !== null) {
-            let password = this.decipherPass(userDB.password);
+        if (userDB[0] !== null) {
+            let password = this.decipherPass(userDB[0].password);
             if (user.password === password) {
                 token = this.createToken(user);
                 let data = {
-                    login: userDB.login,
+                    login: userDB[0].login,
                     token: token,
                     date: new Date().toISOString(),
-                    relation: userDB.relation
+                    relation: userDB[0].relation
                 }
-                if (admin === false) {
-                    await dbApi.addUserSession(data, admin);
-                } else {
-                    await dbApi.addUserSession(data, admin);
-                }
+
+                await this.authDB.addSession(data, isAdmin);
+
             } else {
                 token = null;
             }
@@ -38,16 +34,16 @@ const auth = {
         return token;
     },
 
-    async authUser(token, admin = false) {
-        const session = await dbApi.getUserToken(token, admin);
+    async authUser(token, isAdmin = false) {
+        const session = await this.authDB.getSession(token, isAdmin);
         let authenticated = {};
-        if (session !== undefined) {
+        if (session[0] !== undefined) {
             const sessionTime = 1000 * 60 * settings.sessionTime;
-            const sessionDate = +new Date(session.date);
+            const sessionDate = +new Date(session[0].date);
             const now = +new Date();
             if (((now - sessionDate) / 1000 / 60) <= (sessionTime / 1000 / 60)) {
                 authenticated.verify = true;
-                authenticated.login = session.login;
+                authenticated.login = session[0].login;
                 return authenticated
             } else {
                 authenticated.verify = false;

@@ -1,7 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../modules/auth_module');
-const models = require('../models/models')
+const models = require('../models/models');
+const dbApi = require('../db_module');
+
+const modelTypes = {
+    'teacher': models.Teacher,
+    'class': models.Class,
+    'lesson': models.Lesson,
+}
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -9,9 +16,9 @@ router.get('/', async function(req, res, next) {
     if (token !== undefined) {
         const authenticated = await auth.authUser(token, false);
         if (authenticated.verify) {
-            let classes = await models.Class.getData(authenticated.login);
-            let teachers = await models.Teacher.getData(authenticated.login);
-            let lessons = await models.Lesson.getRawData(authenticated.login);
+            let classes = await models.Class.get(null, authenticated.login, false);
+            let teachers = await models.Teacher.get(null, authenticated.login, false);
+            let lessons = await models.Lesson.get(null, authenticated.login, false);
 
 
             res.render('schedule',{
@@ -29,23 +36,60 @@ router.get('/', async function(req, res, next) {
     }
 });
 
-router.post('/', async function(req, res, next) { // 0 = init, 1 = refresh data, 2 = add item to db
-    let result;
-    if (req.body.call === 2) {
-        const types = [
-            ['Учитель', models.Teacher],
-            ['Урок', models.Lesson],
-            ['Класс', models.Class]
-        ]
-
-        types.forEach((item) => {
-            if (item[0] === req.body.type) {
-                result = item[1].addItem(req.body.data, req.body.user);
-            }
-        });
+router.post('/create', (req, res) => {
+    let confirmToken = dbApi.token(req.body.token);
+    if (confirmToken) {
+        try {
+            modelTypes[req.body.model].add(req.body.data, req.body.user, req.body.isRelation);
+            res.send('approved');
+        } catch (e) {
+            res.send(e);
+        }
+    } else {
+        res.send('access denied');
     }
+});
 
-    res.send(result);
-})
+router.post('/update', (req, res) => {
+    let confirmToken = dbApi.token(req.body.token);
+    if (confirmToken) {
+        try {
+            modelTypes[req.body.model].update(req.body.id, req.body.data, req.body.user, req.body.isRelation);
+            res.send('approved');
+        } catch (e) {
+            res.send(e);
+        }
+    } else {
+        res.send('access denied');
+    }
+});
+
+router.post('/delete', (req, res) => {
+    let confirmToken = dbApi.token(req.body.token);
+    if (confirmToken) {
+        try {
+            modelTypes[req.body.model].delete(req.body.id, req.body.user, req.body.isRelation);
+            res.send('approved');
+        } catch (e) {
+            res.send(e);
+        }
+    } else {
+        res.send('access denied');
+    }
+});
+
+router.post('/get', (req, res) => {
+    let confirmToken = dbApi.token(req.body.token);
+    if (confirmToken) {
+        try {
+            modelTypes[req.body.model].get(req.body.id, req.body.user, req.body.isRelation);
+            res.send('approved');
+        } catch (e) {
+            res.send(e);
+        }
+    } else {
+        res.send('access denied');
+    }
+});
 
 module.exports = router;

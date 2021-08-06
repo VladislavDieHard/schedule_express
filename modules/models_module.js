@@ -1,45 +1,45 @@
-const dbApi = require('./db_module');
+const dbApi = require('../db_module');
 
 const Models = {
-    async addItem(data, user) {
-        return await dbApi.addModel(this.tableModel, data, user);
+    async getUserTag(user) {
+        let tag = await dbApi.get.dbGet(`users`, user.login);
+        return tag[0].relation;
     },
 
-    async getRawData(user) {
-        return await dbApi.getData(user, this.tableModel);
+    async add(data, user, isRelation) {
+        let tag = await this.getUserTag(user);
+        if (isRelation) {
+            return await dbApi.add.dbInsert(`${this.relationModel}_${tag}`, data)
+        } else {
+            return await dbApi.add.dbInsert(`${this.tableModel}_${tag}`, data)
+        }
     },
 
-    async getRelData(user, relModel) {
-        return await dbApi.relationGet(user, relModel);
+    async get(id, user, isRelation){
+        let tag = await this.getUserTag(user);
+        if (isRelation) {
+            return await dbApi.get.dbGet(`${this.relationModel}_${tag}`, id)
+        } else {
+            return await dbApi.get.dbGet(`${this.tableModel}_${tag}`, id)
+        }
     },
 
-    async getData(user) {
-        let data = await this.getRawData(user);
-        let relData = await this.getRelData(user, this.relationModel);
-        data.forEach((item) => {
-            item.relations = this.relationHandler(item.id, relData);
-        });
-        return data;
+    async update(id, data, user, isRelation){
+        let tag = await this.getUserTag(user);
+        if (isRelation) {
+            return await dbApi.update.dbUpdate(`${this.relationModel}_${tag}`, id, data)
+        } else {
+            return await dbApi.update.dbUpdate(`${this.tableModel}_${tag}`, id, data)
+        }
     },
 
-    relationHandler(id, relData) {
-        let data = [];
-        relData.forEach((item) => {
-            if (id === item[this.model]) {
-                data.push(item);
-            }
-        });
-        return data;
-    },
-
-    /// Users model
-
-    async getUsersData() {
-        return await dbApi.getData(this.tableModel);
-    },
-
-    async createUser(data) {
-        return await dbApi.createUser(data);
+    async delete(id, user, isRelation){
+        let tag = this.getUserTag(user);
+        if (isRelation) {
+            return await dbApi.delete.dbDelete(`${this.relationModel}_${tag}`, id)
+        } else {
+            return await dbApi.delete.dbDelete(`${this.tableModel}_${tag}`, id)
+        }
     },
 }
 

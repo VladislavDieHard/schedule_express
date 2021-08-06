@@ -38,7 +38,6 @@ const schedule = {
     },
 
     createItem(data, objectType) {
-        console.log(data)
         let type;
         if (objectType === 'teachers') {
             type = {
@@ -73,7 +72,6 @@ const schedule = {
         let type = document.querySelector('.item-type').value
         let user = document.querySelector('.user-login').innerText;
         let result = await this.backedApi(call, user, data, type);
-        console.log(result);
     },
 
     init() {

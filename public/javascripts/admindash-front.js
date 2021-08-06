@@ -9,7 +9,6 @@ const adminDash = {
         });
 
         let result = response.json();
-        console.log(result);
     },
 
     async updateData(data) {
@@ -38,12 +37,10 @@ const adminDash = {
 
     updateUserList() {
         let users = JSON.parse(document.querySelector('.data-users').getAttribute('data-users'));
-        console.log(users);
     },
 
     switchObject(el) {
         let obj = el.classList[0].split('-')[0];
-        console.log(obj)
         document.querySelector('.object-item-active').classList.remove('object-item-active');
         document.querySelector(`.${obj}`).classList.add('object-item-active');
     },
@@ -61,6 +58,5 @@ function adminDashApi(call, el) { // 0 = switch,
 
 function admindashInit() {
     adminDash.updateUserList();
-    console.log(1)
 }
 
