@@ -110,4 +110,6 @@ dist
 
 *.sqlite3
 
+.idea/
+
 *.xml
