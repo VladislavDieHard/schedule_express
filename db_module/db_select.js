@@ -17,6 +17,7 @@ const dbSelect = {
         } else {
             customSQL = `SELECT * FROM ${table} WHERE id = '${id}' AND is_deleted = '0'`
         }
+
         return customSQL;
     },
 

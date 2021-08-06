@@ -4,12 +4,13 @@ const dbDelete = {
     async dbDelete(table, id) {
         let SQL = this.sqlConstructor(table, id);
         let result = await this.deleteDataFromDB(SQL);
+        console.log(SQL)
         return result;
     },
 
     sqlConstructor(table, id) {
         let customSQL;
-        customSQL = `UPDATE ${table} SET id_deleted = 1 WHERE id = ${id}`
+        customSQL = `UPDATE ${table} SET is_deleted = '1' WHERE id = '${id}'`
         return customSQL;
     },
 

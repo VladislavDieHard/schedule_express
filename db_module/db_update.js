@@ -12,8 +12,7 @@ const dbUpdate = {
         let entries = Object.entries(data);
         let updateData = [];
         entries.forEach((item) => {
-            item.join('=');
-            updateData.push(item);
+            updateData.push(item.join(' = '))
         })
         customSQL = `UPDATE ${table} SET ${updateData.join(',')} WHERE id = '${id}'`
         return customSQL;

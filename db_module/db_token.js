@@ -8,9 +8,9 @@ async function confirmToken(token, isAdmin) {
 function getToken(token, isAdmin) {
     let SQL;
     if (isAdmin) {
-        SQL = `SELECT EXISTS (SELECT * FROM moderator_sessions WHERE id = ${token})`;
+        SQL = `SELECT EXISTS (SELECT * FROM moderator_sessions WHERE id = '${token}')`;
     } else {
-        SQL = `SELECT EXISTS (SELECT * FROM user_sessions WHERE token = ${token})`;
+        SQL = `SELECT EXISTS (SELECT * FROM user_sessions WHERE token = '${token}')`;
     }
     return new Promise((resolve, reject) => {
         let data;

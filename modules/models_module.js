@@ -8,7 +8,7 @@ const Models = {
 
     async add(data, user, isRelation) {
         let tag = await this.getUserTag(user);
-        if (isRelation) {
+        if (JSON.parse(isRelation)) {
             return await dbApi.add.dbInsert(`${this.relationModel}_${tag}`, data)
         } else {
             return await dbApi.add.dbInsert(`${this.tableModel}_${tag}`, data)
@@ -17,7 +17,7 @@ const Models = {
 
     async get(id, user, isRelation){
         let tag = await this.getUserTag(user);
-        if (isRelation) {
+        if (JSON.parse(isRelation)) {
             return await dbApi.get.dbGet(`${this.relationModel}_${tag}`, id)
         } else {
             return await dbApi.get.dbGet(`${this.tableModel}_${tag}`, id)
@@ -26,7 +26,7 @@ const Models = {
 
     async update(id, data, user, isRelation){
         let tag = await this.getUserTag(user);
-        if (isRelation) {
+        if (JSON.parse(isRelation)) {
             return await dbApi.update.dbUpdate(`${this.relationModel}_${tag}`, id, data)
         } else {
             return await dbApi.update.dbUpdate(`${this.tableModel}_${tag}`, id, data)
@@ -34,10 +34,12 @@ const Models = {
     },
 
     async delete(id, user, isRelation){
-        let tag = this.getUserTag(user);
-        if (isRelation) {
+        let tag = await this.getUserTag(user);
+        if (JSON.parse(isRelation)) {
+            console.log(2)
             return await dbApi.delete.dbDelete(`${this.relationModel}_${tag}`, id)
         } else {
+            console.log(3)
             return await dbApi.delete.dbDelete(`${this.tableModel}_${tag}`, id)
         }
     },
