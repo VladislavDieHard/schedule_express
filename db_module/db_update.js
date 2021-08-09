@@ -12,16 +12,22 @@ const dbUpdate = {
         let entries = Object.entries(data);
         let updateData = [];
         entries.forEach((item) => {
-            updateData.push(item.join(' = '))
+            updateData.push(item.join(' = '));
         })
-        customSQL = `UPDATE ${table} SET ${updateData.join(',')} WHERE id = '${id}'`
+        customSQL = `UPDATE ${table} SET ${updateData.join(',')} WHERE id = '${id}'`;
         return customSQL;
     },
 
     updateDataForDB(sql) {
-        db.run(sql, (err) => {
-            return !err;
-        });
+        return new Promise((resolve, reject) => {
+            db.run(sql, (e) => {
+                if(e) {
+                    reject(!e);
+                } else {
+                    resolve(true);
+                }
+            });
+        })
     }
 }
 

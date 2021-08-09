@@ -4,7 +4,6 @@ const dbDelete = {
     async dbDelete(table, id) {
         let SQL = this.sqlConstructor(table, id);
         let result = await this.deleteDataFromDB(SQL);
-        console.log(SQL)
         return result;
     },
 
@@ -15,8 +14,14 @@ const dbDelete = {
     },
 
     deleteDataFromDB(sql) {
-        db.run(sql, (err) => {
-            return !err;
+        return new Promise((resolve, reject) => {
+            db.run(sql, (e) => {
+                if(e) {
+                    reject(!e);
+                } else {
+                    resolve(true);
+                }
+            });
         });
     }
 }

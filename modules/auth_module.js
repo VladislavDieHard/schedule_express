@@ -6,9 +6,12 @@ const settings = JSON.parse(fs.readFileSync('./settings/settings.json', 'utf8'))
 const auth = {
     authDB: dbApi.auth,
 
-    async auth(user, isAdmin = false) {
+    async auth(user) {
         let userDB;
-        userDB = await this.authDB.getUser(user.login, isAdmin);
+        userDB = await this.authDB.getUser(user.login);
+        if (Boolean(userDB.is_deleted)) {
+            return false;
+        }
 
         let token;
         if (userDB[0] !== null) {
@@ -19,10 +22,9 @@ const auth = {
                     login: userDB[0].login,
                     token: token,
                     date: new Date().toISOString(),
-                    relation: userDB[0].relation
+                    is_admin: userDB[0].is_admin
                 }
-
-                await this.authDB.addSession(data, isAdmin);
+                await this.authDB.addSession(data);
 
             } else {
                 token = null;
@@ -34,8 +36,8 @@ const auth = {
         return token;
     },
 
-    async authUser(token, isAdmin = false) {
-        const session = await this.authDB.getSession(token, isAdmin);
+    async authToken(token) {
+        const session = await this.authDB.getSession(token);
         let authenticated = {};
         if (session[0] !== undefined) {
             const sessionTime = 1000 * 60 * settings.sessionTime;
@@ -44,6 +46,7 @@ const auth = {
             if (((now - sessionDate) / 1000 / 60) <= (sessionTime / 1000 / 60)) {
                 authenticated.verify = true;
                 authenticated.login = session[0].login;
+                authenticated.is_admin = Boolean(session[0].is_admin);
                 return authenticated
             } else {
                 authenticated.verify = false;

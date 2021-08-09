@@ -1,46 +1,73 @@
 const dbApi = require('../db_module');
 
 const Models = {
-    async getUserTag(user) {
-        let tag = await dbApi.get.dbGet(`users`, user.login);
-        return tag[0].relation;
+    async getUserTableName(userId) {
+        return await dbApi.get.getTableName(this.table, userId);
     },
 
-    async add(data, user, isRelation) {
-        let tag = await this.getUserTag(user);
-        if (JSON.parse(isRelation)) {
-            return await dbApi.add.dbInsert(`${this.relationModel}_${tag}`, data)
-        } else {
-            return await dbApi.add.dbInsert(`${this.tableModel}_${tag}`, data)
+    async addUser() {
+
+    },
+
+    async deleteUser() {
+
+    },
+
+    async updateUser() {
+
+    },
+
+    async getUser() {
+        try {
+            let userObj = await dbApi.get.dbGet(this.table, id, isAdmin);
+            let result = [];
+            userObj.forEach((item) => {
+                result.push({
+                    id: item.id,
+                    username: item.username,
+                    login: item.login,
+                    is_deleted: item.is_deleted,
+                })
+            });
+            return result;
+        } catch (e) {
+            return e;
         }
     },
 
-    async get(id, user, isRelation){
-        let tag = await this.getUserTag(user);
-        if (JSON.parse(isRelation)) {
-            return await dbApi.get.dbGet(`${this.relationModel}_${tag}`, id)
-        } else {
-            return await dbApi.get.dbGet(`${this.tableModel}_${tag}`, id)
+    async add(data, userId) {
+        try {
+            let table = await this.getUserTableName(userId);
+            return await dbApi.add.dbInsert(table, data);
+        } catch (e) {
+            return e;
         }
     },
 
-    async update(id, data, user, isRelation){
-        let tag = await this.getUserTag(user);
-        if (JSON.parse(isRelation)) {
-            return await dbApi.update.dbUpdate(`${this.relationModel}_${tag}`, id, data)
-        } else {
-            return await dbApi.update.dbUpdate(`${this.tableModel}_${tag}`, id, data)
+    async get(id, userId, isAdmin){
+        try {
+            let table = await this.getUserTableName(userId);
+            return await dbApi.get.dbGet(table, id, isAdmin);
+        } catch (e) {
+            return e;
         }
     },
 
-    async delete(id, user, isRelation){
-        let tag = await this.getUserTag(user);
-        if (JSON.parse(isRelation)) {
-            console.log(2)
-            return await dbApi.delete.dbDelete(`${this.relationModel}_${tag}`, id)
-        } else {
-            console.log(3)
-            return await dbApi.delete.dbDelete(`${this.tableModel}_${tag}`, id)
+    async update(id, data, userId, isAdmin){
+        try {
+            let table = await this.getUserTableName(userId);
+            return await dbApi.update.dbUpdate(table, id, data);
+        } catch (e) {
+            return e;
+        }
+    },
+
+    async delete(id, userId, isAdmin){
+        try {
+            let table = await this.getUserTableName(userId);
+            return await dbApi.delete.dbDelete(table, id);
+        } catch (e) {
+            return e;
         }
     },
 }

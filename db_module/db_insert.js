@@ -16,13 +16,20 @@ const dbInsert = {
             insertColumns.push(item[0]);
             insertData.push(`'${item[1]}'`);
         })
-        customSQL = `INSERT INTO ${table} (${insertColumns.join(',')}) VALUES (${insertData.join(',')})`
+        customSQL = `INSERT INTO ${table} (${insertColumns.join(',')}) VALUES (${insertData.join(',')})`;
+        console.log(customSQL)
         return customSQL;
     },
 
     updateDataForDB(sql) {
-        db.run(sql, (err) => {
-            return !err;
+        return new Promise((resolve, reject) => {
+            db.run(sql, (e) => {
+                if(e) {
+                    reject(!e);
+                } else {
+                    resolve(true);
+                }
+            });
         });
     }
 }

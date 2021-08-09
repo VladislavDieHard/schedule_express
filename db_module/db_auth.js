@@ -5,36 +5,20 @@ const dbDelete = require('./db_delete');
 const dbInsert = require('./db_insert');
 
 const dbAuth = {
-    async addUser(data, isAdmin) {
-        if (isAdmin) {
-            return await dbInsert.dbInsert('moderators', data)
-        } else {
-            return await dbInsert.dbInsert('users', data)
-        }
+    async addUser(data) {
+        return await dbInsert.dbInsert('users', data);
     },
 
-    async addSession(data, isAdmin) {
-        if (isAdmin) {
-            return await dbInsert.dbInsert('moderator_sessions', data)
-        } else {
-            return await dbInsert.dbInsert('user_sessions', data)
-        }
+    async getUser(login) {
+        return await dbSelect.getUser(login);
     },
 
-    async getUser(login, isAdmin) {
-        if (isAdmin) {
-            return await dbSelect.getUser('moderators', login)
-        } else {
-            return await dbSelect.getUser('users', login);
-        }
+    async addSession(data) {
+        return await dbInsert.dbInsert('user_sessions', data);
     },
 
-    async getSession(token, isAdmin) {
-        if (isAdmin) {
-            return await dbSelect.getSession('moderator_sessions', token)
-        } else {
-            return await dbSelect.getSession('user_sessions', token)
-        }
+    async getSession(token) {
+        return await dbSelect.getSession(token);
     },
 }
 

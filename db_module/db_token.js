@@ -1,8 +1,11 @@
 const db = require('./db_connect');
 
 async function confirmToken(token, isAdmin) {
-    let result = await getToken(token, isAdmin);
-    return Boolean(result);
+    try {
+        return await getToken(token, isAdmin);
+    } catch (e) {
+        return false;
+    }
 }
 
 function getToken(token, isAdmin) {
@@ -14,12 +17,15 @@ function getToken(token, isAdmin) {
     }
     return new Promise((resolve, reject) => {
         let data;
-        db.all(SQL, (err, rows) => {
-            if (err) {
-                return reject(err);
+        db.all(SQL, (e, rows) => {
+            if (e) {
+                reject(e);
+            } else if (!rows[0][SQL.substr(7)]) {
+                reject('unrecognized token');
+            } else {
+                data = rows;
+                resolve(data);
             }
-            data = rows;
-            resolve(data);
         });
     });
 }

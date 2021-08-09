@@ -7,7 +7,7 @@ router.get('/', async function(req, res, next) {
   const token = req.cookies.token;
 
   if (token !== undefined) {
-    const authenticated = await auth.authUser(token);
+    const authenticated = await auth.authToken(token);
     if (authenticated.verify) {
       res.redirect('/schedule');
     } else {
@@ -20,7 +20,9 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   const user = req.body;
-  const token = await auth.auth(user, false);
+  console.log(user)
+  const token = await auth.auth(user);
+  console.log(token)
 
   if (token !== null) {
     res.send(token);
