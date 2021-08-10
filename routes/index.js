@@ -9,7 +9,11 @@ router.get('/', async function(req, res, next) {
   if (token !== undefined) {
     const authenticated = await auth.authToken(token);
     if (authenticated.verify) {
-      res.redirect('/schedule');
+      if (authenticated.is_admin) {
+        res.redirect('/admin');
+      } else {
+        res.redirect('/schedule');
+      }
     } else {
       res.render('index', { title: 'Войдите в систему' });
     }
