@@ -45,9 +45,11 @@ const Models = {
     },
 
     async get(id, userId, isAdmin){
+        console.log(this)
         try {
             let table = await this.getUserTableName(userId);
-            return await dbApi.get.dbGet(table, id, isAdmin);
+            console.log(table)
+            return await dbApi.get.dbGet(table, this, id, isAdmin);
         } catch (e) {
             return e;
         }

@@ -3,7 +3,7 @@ const dbSelect = require('./db_select');
 const dbDelete = require('./db_delete');
 const dbInsert = require('./db_insert');
 const dbAuth = require('./db_auth');
-const dbToken = require('./db_token');
+const permissionCheck = require('./db_check_user');
 
 const dbApi = {
     get: dbSelect,
@@ -11,7 +11,7 @@ const dbApi = {
     delete: dbDelete,
     add: dbInsert,
     auth: dbAuth,
-    token: dbToken
+    check: permissionCheck
 }
 
 module.exports = dbApi;

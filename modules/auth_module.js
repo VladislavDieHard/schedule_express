@@ -81,7 +81,7 @@ const auth = {
     },
 
     decipherPass(pass) {
-        const decipher = crypto.createDecipher('aes192',settings.password);
+        const decipher = crypto.createDecipher('aes192', settings.password);
         let decrypted = decipher.update(pass,'hex','utf8');
 
         decrypted = decrypted + decipher.final('utf8');
@@ -89,5 +89,16 @@ const auth = {
         return decrypted;
     }
 }
+
+// function cipherPass(pass) {
+//     const cipher = crypto.createCipher('aes192',settings.password);
+//     let encrypted = cipher.update(pass,'utf8','hex');
+//
+//     encrypted = encrypted + cipher.final('hex');
+//
+//     return encrypted;
+// }
+//
+// console.log(cipherPass('test_password'));
 
 module.exports = auth;

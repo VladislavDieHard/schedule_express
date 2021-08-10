@@ -1,8 +1,8 @@
 const db = require('./db_connect');
 
 const dbSelect = {
-    async dbGet(table, id, isAdmin) {
-        let SQL = this.sqlConstructor(table, id, isAdmin);
+    async dbGet(table, model, id, isAdmin) {
+        let SQL = this.sqlConstructor(table, model, id, isAdmin);
         try {
             return await this.selectFromDB(SQL);
         } catch (e) {
@@ -10,19 +10,22 @@ const dbSelect = {
         }
     },
 
-    sqlConstructor(table, id, isAdmin) {
-        console.log(id)
-        console.log(isAdmin)
+    sqlConstructor(table, model, id, isAdmin) {
         let customSQL;
 
-        customSQL = `SELECT * FROM ${table}`;
-        if(id) customSQL
-        if (isAdmin) customSQL += ''
-        // if (id === undefined || id === null) {
-        //     customSQL = `SELECT * FROM ${table} ${deleteShow}`
-        // } else {
-        //     customSQL = `SELECT * FROM ${table} WHERE id = '${id}' AND is_deleted = '0'`
-        // }
+        console.log('isAdmin');
+        console.log(isAdmin);
+        if (isAdmin) {
+            customSQL = `SELECT ${Object.keys(model.rows)} FROM ${table}`;
+        } else {
+            let rows = [];
+            Object.keys(model.rows).forEach((item) => {
+                if (!model.rows[item].permission) {
+                    rows.push(item);
+                }
+            });
+            customSQL = `SELECT ${rows} FROM ${table} WHERE is_deleted = '0'`;
+        }
 
         return customSQL;
     },
@@ -37,6 +40,7 @@ const dbSelect = {
                     return reject(`no matches found for ${sql}`);
                 } else {
                     data = rows;
+                    console.log(data)
                     resolve(data);
                 }
             });
@@ -56,10 +60,11 @@ const dbSelect = {
 
     async getTableName(table, userId) {
         try {
-            return await this.selectFromDB(
-             `SELECT ${table}
+            let result = await this.selectFromDB(
+                `SELECT ${table}
              FROM user_to_tables
              WHERE user_id='${userId}'`);
+            return result[0][table]
         } catch (e) {
             return e;
         }

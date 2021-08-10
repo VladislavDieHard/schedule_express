@@ -15,15 +15,14 @@ const modelTypes = {
 
 router.post('/create', async (req, res) => {
     if (req.body.token) {
-        let confirmToken = await dbApi.token(req.body.token);
-        if (confirmToken) {
+        let permissionCheck = await dbApi.check(req.body.user.login, req.body.token);
+        if (permissionCheck.tokenCheck) {
             res.send(await modelTypes[req.body.model].add(
                 req.body.data,
-                req.body.user,
-                req.body.isRelation
+                req.body.user
             ));
         } else {
-            res.send(confirmToken);
+            res.send(permissionCheck.tokenCheck);
         }
     } else {
         res.send('token was not get');
@@ -32,16 +31,15 @@ router.post('/create', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     if (req.body.token) {
-        let confirmToken = await dbApi.token(req.body.token);
-        if (confirmToken) {
+        let permissionCheck = await dbApi.check(req.body.user.login, req.body.token);
+        if (permissionCheck.tokenCheck) {
             res.send(await modelTypes[req.body.model].update(
                 req.body.id,
                 req.body.data,
-                req.body.user,
-                req.body.isRelation
+                req.body.user
             ));
         } else {
-            res.send(confirmToken);
+            res.send(permissionCheck.tokenCheck);
         }
     } else {
         res.send('token was not get');
@@ -50,15 +48,14 @@ router.post('/update', async (req, res) => {
 
 router.post('/delete', async (req, res) => {
     if (req.body.token) {
-        let confirmToken = await dbApi.token(req.body.token);
-        if (confirmToken) {
+        let permissionCheck = await dbApi.check(req.body.user.login, req.body.token);
+        if (permissionCheck.tokenCheck) {
             res.send(await modelTypes[req.body.model].delete(
                 req.body.id,
-                req.body.user,
-                req.body.isRelation
+                req.body.user
             ));
         } else {
-            res.send(confirmToken);
+            res.send(permissionCheck.tokenCheck);
         }
     } else {
         res.send('token was not get');
@@ -67,12 +64,14 @@ router.post('/delete', async (req, res) => {
 
 router.post('/get', async (req, res) => {
     if (req.body.token) {
-        let confirmToken = await dbApi.token(req.body.token);
-        if (confirmToken) {
+        let permissionCheck = await dbApi.check(req.body.user.login, req.body.token);
+        console.log(permissionCheck)
+        if (permissionCheck.tokenCheck) {
+            console.log(req.body)
             let data = await modelTypes[req.body.model].get(
                 req.body.id,
-                req.body.user,
-                req.body.isRelation
+                req.body.user.id,
+                permissionCheck.userCheck
             );
             if (data) {
                 res.send(JSON.stringify(data));
@@ -80,7 +79,7 @@ router.post('/get', async (req, res) => {
                 res.send(data);
             }
         } else {
-            res.send(confirmToken);
+            res.send(permissionCheck.tokenCheck);
         }
     } else {
         res.send('token was not get');
