@@ -38,8 +38,7 @@ const Class = sequelize.define(
     {
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
+            allowNull: false
         },
         isHided: {
             type: DataTypes.BOOLEAN,
@@ -62,8 +61,7 @@ const Teacher = sequelize.define(
     {
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         isHided: {
             type: DataTypes.BOOLEAN,
@@ -86,8 +84,7 @@ const Lesson = sequelize.define(
     {
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            unique: true
+            allowNull: false
         },
         isHided: {
             type: DataTypes.BOOLEAN,
@@ -127,7 +124,17 @@ const Session = sequelize.define(
     }
 )
 
-sequelize.sync({alter: true});
+User.belongsToMany(Class, {
+    through: 'user_to_class'
+});
+User.belongsToMany(Teacher, {
+    through: 'teacher_to_class'
+});
+User.belongsToMany(Lesson, {
+    through: 'lesson_to_class'
+});
+
+sequelize.sync({alter: true}).then(console.log);
 
 module.exports = {
     User: User,

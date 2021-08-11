@@ -1,14 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../modules/auth_module');
+const models = require('../models/models');
 
 router.get('/', async function(req, res, next) {
     const token = req.cookies.token;
 
     if (token !== undefined) {
-        const authenticated = await auth.authToken(token);
+        let authenticated = auth.authUser(token);
+
         if (authenticated.verify) {
-            if (authenticated.is_admin) {
+            let isAdmin = (await models.Session.findOne({
+                where: {
+                    token: token
+                },
+                attributes: ['isAdmin']
+            })).dataValues;
+
+            if (isAdmin) {
                 res.redirect('/admin');
             } else {
                 res.redirect('/schedule');

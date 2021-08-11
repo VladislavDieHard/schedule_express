@@ -42,12 +42,10 @@ const userController = {
 
 
         if (isAdmin) {
-            return await models.User.create(
-                {
-                    login: login,
-                    password: this.cipherPass(password)
-                }
-            );
+            return await models.User.create({
+                login: login,
+                password: this.cipherPass(password)
+            });
         } else {
             return false;
         }

@@ -1,3 +1,5 @@
+const { Sequelize, DataTypes } = require('sequelize');
+
 const models = require('../models/models');
 const cryptography = require('./crypto')
 const fs = require('fs');
