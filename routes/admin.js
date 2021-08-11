@@ -1,30 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../modules/auth_module');
+const models = require('../models/models');
 
 router.get('/', async function(req, res, next) {
-    const token = req.cookies.adminToken;
+    const token = req.cookies.token;
 
     if (token !== undefined) {
-        const authenticated = await auth.authUser(token, true);
+        const authenticated = await auth.authUser(token);
         if (authenticated.verify) {
-            res.redirect('/admin_dash');
+            let user = await models.User.findOne({
+                where: {login: authenticated.login},
+                attributes: ['id', 'login']
+            });
+            let users = await models.User.findAll({
+                attributes: ['id', 'login', 'isDeleted', 'createdAt', 'updatedAt', ]
+            });
+
+            res.render('admin_dash',{
+                title: 'admin dash',
+                user: JSON.stringify(user),
+                users: JSON.stringify(users)
+            });
         } else {
-            res.render('admin', { title: 'Войдите в систему' });
+            res.redirect('/');
         }
     } else {
-        res.render('admin', { title: 'Войдите в систему' });
-    }
-});
-
-router.post('/', async function(req, res, next) {
-    const user = req.body;
-    const token = await auth.auth(user, true);
-
-    if (token !== null) {
-        res.send(token);
-    } else {
-        res.send(null);
+        res.redirect('/');
     }
 });
 

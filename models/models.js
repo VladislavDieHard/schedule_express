@@ -1,38 +1,145 @@
-const modelsModule = require('../modules/models_module');
+const { Sequelize, DataTypes } = require('sequelize');
 
-const Lesson = {
-    model: 'lesson',
-    tableModel: 'lessons'
-}
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: '../db.sqlite3'
+});
 
-Lesson.__proto__ = modelsModule;
+const User = sequelize.define(
+    'User',
+    {
+        login: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'users'
+    }
+);
 
-const Class = {
-    model: 'class',
-    tableModel: 'classes',
-    relationModel: 'class_to_lesson'
-}
+const Class = sequelize.define(
+    'Class',
+    {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        isHided: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'classes'
+    }
+);
 
-Class.__proto__ = modelsModule;
+const Teacher = sequelize.define(
+    'Teacher',
+    {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        isHided: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'teachers'
+    }
+);
 
-const Teacher = {
-    model: 'teacher',
-    tableModel: 'teachers',
-    relationModel: 'teacher_to_lesson',
-}
+const Lesson = sequelize.define(
+    'Lesson',
+    {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        isHided: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'lessons'
+    }
+);
 
-Teacher.__proto__ = modelsModule;
+const Session = sequelize.define(
+    'Session',
+    {
+        login: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        token: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        adminPermissions: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'sessions'
+    }
+)
 
-const User = {
-    model: 'user',
-    tableModel: 'users',
-}
+User.belongsToMany(Class, {
+    through: 'user_to_class'
+});
+User.belongsToMany(Teacher, {
+    through: 'teacher_to_class'
+});
+User.belongsToMany(Lesson, {
+    through: 'lesson_to_class'
+});
 
-User.__proto__ = modelsModule;
+sequelize.sync({alter: true}).then();
 
 module.exports = {
-    Lesson: Lesson,
+    User: User,
     Class: Class,
     Teacher: Teacher,
-    User: User,
-};
+    Lesson: Lesson,
+    Session: Session
+}
