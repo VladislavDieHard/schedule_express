@@ -9,9 +9,18 @@ router.get('/', async function(req, res, next) {
     if (token !== undefined) {
         const authenticated = await auth.authUser(token, false);
         if (authenticated.verify) {
-            let classes = await models.Class.findAll();
-            let teachers = await models.Teacher.findAll();
-            let lessons = await models.Lesson.findAll();
+            let classes = await models.Class.findAll({
+                where: {isDeleted: false},
+                attributes: ['id', 'name', 'isHided']
+            });
+            let teachers = await models.Teacher.findAll({
+                where: {isDeleted: false},
+                attributes: ['id', 'name', 'isHided']
+            });
+            let lessons = await models.Lesson.findAll({
+                where: {isDeleted: false},
+                attributes: ['id', 'name', 'isHided']
+            });
             let user = await models.User.findOne({
                 where: {
                     login: authenticated.login

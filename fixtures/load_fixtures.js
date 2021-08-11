@@ -13,7 +13,6 @@ const modelTypes = {
 
 const fixturesLoad = {
     addData() {
-
         let data = fixtures;
 
         Object.keys(data).forEach((key) => {

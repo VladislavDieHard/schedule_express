@@ -7,12 +7,12 @@ router.get('/', async function(req, res, next) {
     const token = req.cookies.token;
 
     if (token !== undefined) {
-        let authenticated = auth.authUser(token);
+        let authenticated = await auth.authUser(token);
 
         if (authenticated.verify) {
-            let isAdmin = (await models.Session.findOne({
+            let isAdmin = (await models.User.findOne({
                 where: {
-                    token: token
+                    login: authenticated.login
                 },
                 attributes: ['isAdmin']
             })).dataValues;

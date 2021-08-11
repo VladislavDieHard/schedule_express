@@ -134,7 +134,7 @@ User.belongsToMany(Lesson, {
     through: 'lesson_to_class'
 });
 
-sequelize.sync({alter: true}).then(console.log);
+sequelize.sync({alter: true}).then();
 
 module.exports = {
     User: User,

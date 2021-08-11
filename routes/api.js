@@ -19,9 +19,7 @@ router.post('/delete', async (req, res) => {res.send(await api.delete(req))});
 router.post('/get', async (req, res) => {
     if (req.body.token) {
         let permissionCheck = await dbApi.check(req.body.user.login, req.body.token);
-        console.log(permissionCheck)
         if (permissionCheck.tokenCheck) {
-            console.log(req.body)
             let data = await modelTypes[req.body.model].get(
                 req.body.id,
                 req.body.user.id,

@@ -6,14 +6,11 @@ const auth = require('../modules/auth_module');
 router.get('/', async function(req, res, next) {
   const token = req.cookies.token;
 
-  if (token !== undefined) {
-    const authenticated = await auth.authToken(token);
+  if (token !== undefined && token !== null) {
+    const authenticated = await auth.authUser(token);
+
     if (authenticated.verify) {
-      if (authenticated.is_admin) {
-        res.redirect('/admin');
-      } else {
-        res.redirect('/schedule');
-      }
+      res.redirect('/redirect');
     } else {
       res.render('index', { title: 'Войдите в систему' });
     }
@@ -24,9 +21,7 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   const user = req.body;
-  console.log(user)
   const token = await auth.auth(user);
-  console.log(token)
 
   if (token !== null) {
     res.send(token);
