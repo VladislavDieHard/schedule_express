@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../modules/auth_module');
 const models = require('../models/models');
-const dbApi = require('../db_module');
 
 const modelTypes = {
     'teacher': models.Teacher,
@@ -16,14 +15,20 @@ router.get('/', async function(req, res, next) {
     if (token !== undefined) {
         const authenticated = await auth.authUser(token, false);
         if (authenticated.verify) {
-            let classes = await models.Class.get(null, authenticated.login, false);
-            let teachers = await models.Teacher.get(null, authenticated.login, false);
-            let lessons = await models.Lesson.get(null, authenticated.login, false);
-
+            let classes = await models.Class.findAll();
+            let teachers = await models.Teacher.findAll();
+            let lessons = await models.Lesson.findAll();
+            let user = await models.User.findOne({
+                where: {
+                    login: authenticated.login
+                },
+                attributes: ['id', 'login']
+            });
 
             res.render('schedule',{
                 title: 'Расписание',
-                login: authenticated.login,
+                username: user.login,
+                user: JSON.stringify(user),
                 teachersData: JSON.stringify(teachers),
                 lessonsData: JSON.stringify(lessons),
                 classesData: JSON.stringify(classes),

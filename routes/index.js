@@ -5,8 +5,9 @@ const auth = require('../modules/auth_module');
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   const token = req.cookies.token;
+  console.log(token)
 
-  if (token !== undefined) {
+  if (token !== undefined && null) {
     const authenticated = await auth.authUser(token);
     if (authenticated.verify) {
       res.redirect('/schedule');
@@ -20,7 +21,7 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   const user = req.body;
-  const token = await auth.auth(user, false);
+  const token = await auth.auth(user);
 
   if (token !== null) {
     res.send(token);
