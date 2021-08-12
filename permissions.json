@@ -1,0 +1,155 @@
+{
+  "admin": {
+    "availableModels": [
+      "User",
+      "Class",
+      "Teacher",
+      "Lesson",
+      "School"
+    ],
+    "createAttributes": {
+      "User": [
+        "login",
+        "password",
+        "SchoolId"
+      ],
+      "Class": [
+        "name",
+        "isHided"
+      ],
+      "Teacher": [
+        "name",
+        "isHided"
+      ],
+      "Lesson": [
+        "name",
+        "isHided"
+      ],
+      "School": [
+        "name"
+      ]
+    },
+    "updateAttributes": {
+      "User": [
+        "password",
+        "isDeleted"
+      ],
+      "Class": [
+        "name",
+        "isHided",
+        "isDeleted"
+      ],
+      "Teacher": [
+        "name",
+        "isHided",
+        "isDeleted"
+      ],
+      "Lesson": [
+        "name",
+        "isHided",
+        "isDeleted",
+        "ClassId",
+        "TeacherId"
+      ],
+      "School": [
+        "name",
+        "isDeleted"
+      ]
+    },
+    "getAttributes": {
+      "User": [
+        "id",
+        "login",
+        "isDeleted",
+        "createdAt",
+        "UpdatedAt"
+      ],
+      "Class": [
+        "id",
+        "name",
+        "isHided",
+        "isDeleted",
+        "createdAt",
+        "UpdatedAt"
+      ],
+      "Teacher": [
+        "id",
+        "name",
+        "isHided",
+        "isDeleted",
+        "createdAt",
+        "UpdatedAt"
+      ],
+      "Lesson": [
+        "id",
+        "name",
+        "isHided",
+        "isDeleted",
+        "createdAt",
+        "UpdatedAt",
+        "ClassId",
+        "TeacherId"
+      ],
+      "School": [
+        "id",
+        "name",
+        "isDeleted",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "user": {
+    "availableModels": [
+      "Class",
+      "Teacher",
+      "Lesson"
+    ],
+    "createAttributes": {
+      "Class": [
+        "name"
+      ],
+      "Teacher": [
+        "name"
+      ],
+      "Lesson": [
+        "name"
+      ]
+    },
+    "updateAttributes": {
+      "Class": [
+        "name",
+        "isHided"
+      ],
+      "Teacher": [
+        "name",
+        "isHided"
+      ],
+      "Lesson": [
+        "name",
+        "isHided",
+        "ClassId",
+        "TeacherId"
+      ]
+    },
+    "getAttributes": {
+      "Class": [
+        "id",
+        "name",
+        "isHided"
+      ],
+      "Teacher": [
+        "id",
+        "name",
+        "isHided"
+      ],
+      "Lesson": [
+        "id",
+        "name",
+        "isHided",
+        "ClassId",
+        "TeacherId"
+      ]
+    }
+  }
+}

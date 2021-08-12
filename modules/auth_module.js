@@ -1,5 +1,3 @@
-const { Sequelize, DataTypes } = require('sequelize');
-
 const models = require('../models/models');
 const cryptography = require('./crypto')
 const fs = require('fs');
@@ -28,7 +26,7 @@ const auth = {
                     {
                         login: dbUser.login,
                         token: token,
-                        isAdmin: dbUser.isAdmin
+                        adminPermissions: dbUser.isAdmin
                     }
                 )
 
@@ -38,7 +36,6 @@ const auth = {
         } else {
             token = null;
         }
-
         return token;
     },
 
