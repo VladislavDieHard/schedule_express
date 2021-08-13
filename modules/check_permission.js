@@ -8,9 +8,9 @@ async function checkPermission(token) {
         attributes: ['adminPermissions']
     });
     if (result !== null) {
-        return result.dataValues;
+        return result.dataValues.adminPermissions;
     } else {
-        return '';
+        return new Error('token not found');
     }
 }
 

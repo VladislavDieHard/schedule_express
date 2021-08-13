@@ -38,12 +38,6 @@ const fixturesLoad = {
             });
         }
 
-        console.log(`
-        
-        Data : ${JSON.stringify(data)}
-        
-        `)
-
         let date = new Date().toISOString()
 
         // try {

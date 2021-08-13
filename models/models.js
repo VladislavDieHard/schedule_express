@@ -140,24 +140,49 @@ const School = sequelize.define(
     {
         tableName: 'schools'
     }
-)
+);
 
-User.belongsToMany(Class, {
-    through: 'user_to_class'
-});
-User.belongsToMany(Teacher, {
-    through: 'user_to_teacher'
-});
-User.belongsToMany(Lesson, {
-    through: 'user_to_lesson'
-});
+const ClassToLesson = sequelize.define(
+    'ClassToLesson',
+    {
+        hours: {
+            type: DataTypes.NUMBER,
+            allowNull: false
+        },
+        isHided: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'class_to_lesson'
+    }
+);
 
-Class.hasMany(Lesson)
-Teacher.hasMany(Lesson)
 
 School.hasMany(User);
+User.hasOne(School);
 
-sequelize.sync({alter: true}).then();
+School.hasMany(Lesson);
+Lesson.belongsTo(School);
+
+School.hasMany(Teacher);
+Teacher.belongsTo(School);
+
+School.hasMany(Class);
+Class.belongsTo(School);
+
+Class.belongsToMany(Lesson, {through: ClassToLesson});
+
+Teacher.belongsToMany(Lesson, {through: 'teacher_to_lesson'});
+
+// sequelize.sync({alter:true});
 
 module.exports = {
     User: User,
