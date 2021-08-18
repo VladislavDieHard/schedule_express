@@ -1,5 +1,8 @@
 <link rel='stylesheet' href='/stylesheets/admin-dash.css' />
 <script src="javascripts/admindash-front.js"></script>
+<script src="javascripts/adminDashFront/showData.js"></script>
+<script src="javascripts/adminDashFront/models.js"></script>
+
 
 <div class="wrapper">
     <header class="header">
@@ -11,19 +14,18 @@
         </div>
     </header>
     <div class="content">
-        <div class="buttons-objects">
-            <button onclick="adminDashApi(0, this)" class="teachers-btn btn">teachers</button>
-            <button onclick="adminDashApi(0, this)" class="classes-btn btn">classes</button>
-            <button onclick="adminDashApi(0, this)" class="lessons-btn btn">lessons</button>
-            <button onclick="adminDashApi(0, this)" class="update-btn btn">update</button>
-            <button onclick="adminDashApi(0, this)" class="add-btn btn">add</button>
+        <div class="sidebar">
+            <div class="buttons-objects">
+                <button onclick="adminDashApi(0, this)" class="teachers-btn btn">teachers</button>
+                <button onclick="adminDashApi(0, this)" class="classes-btn btn">classes</button>
+                <button onclick="adminDashApi(0, this)" class="lessons-btn btn">lessons</button>
+                <button onclick="adminDashApi(0, this)" class="update-btn btn">update</button>
+                <button onclick="findData('User')" class=" btn">test</button>
+            </div>
         </div>
         <div class="object-content">
             <div class="teachers object-item object-item-active">
-                <ul class="teacher-list">
-                    <li class="teacher-item"></li>
-                    <li class="teacher-item"></li>
-                    <li class="teacher-item"></li>
+                <ul class="teacher-list" id="teacherId">
                 </ul>
             </div>
             <div class="classes object-item">
