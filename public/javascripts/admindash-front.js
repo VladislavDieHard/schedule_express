@@ -9,7 +9,6 @@ const adminDash = {
         });
 
         let result = response.json();
-        console.log(result);
     },
 
     async updateData(data) {
@@ -21,38 +20,6 @@ const adminDash = {
         let notficationText = `Объект: ${update.obj} обновлён!`;
         this.showNotification(notficationText);
     },
-
-    showNotification(text) {
-        document.querySelector('.notification').innerHTML = text;
-        document.querySelector('.notification').classList.add('show-notification');
-        setTimeout(document.querySelector('.notification').classList.remove('show-notification'), 1000);
-    },
-
-    refreshData() {
-
-    },
-
-    getData() {
-
-    },
-
-    updateUserList() {
-        let users = JSON.parse(document.querySelector('.data-users').getAttribute('data-users'));
-        console.log(users);
-    },
-
-    switchObject(el) {
-        let obj = el.classList[0].split('-')[0];
-        console.log(obj)
-        document.querySelector('.object-item-active').classList.remove('object-item-active');
-        document.querySelector(`.${obj}`).classList.add('object-item-active');
-    },
-
-    controller(call, el) {
-        if (call === 0) {
-            this.switchObject(el);
-        }
-    }
 }
 
 function adminDashApi(call, el) { // 0 = switch,
@@ -61,6 +28,5 @@ function adminDashApi(call, el) { // 0 = switch,
 
 function admindashInit() {
     adminDash.updateUserList();
-    console.log(1)
 }
 

@@ -31,7 +31,7 @@ const auth = {
             document.querySelector('.err-text').innerHTML = 'Вы ввели неверный логин или пароль'
         } else {
             document.cookie = `token=${result}`;
-            document.location.href = '/schedule';
+            document.location.href = '/redirect';
         }
     },
 

@@ -1,0 +1,52 @@
+{
+  "School": [
+    {
+      "name": "DevSchool1",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isDeleted": "false"
+    },
+    {
+      "name": "DevSchool2",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isDeleted": "false"
+    }
+  ],
+  "User": [
+    {
+      "login": "DevAdmin1",
+      "password": "DevAdminPass",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isAdmin": "true",
+      "isDeleted": "false"
+    },
+    {
+      "login": "DevAdmin2",
+      "password": "DevAdminPass",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isAdmin": "true",
+      "isDeleted": "false"
+    },
+    {
+      "login": "DevUser1",
+      "password": "DevUserPass",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isAdmin": "false",
+      "isDeleted": "false",
+      "SchoolId": 1
+    },
+    {
+      "login": "DevUser2",
+      "password": "DevUserPass",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isAdmin": "false",
+      "isDeleted": "false",
+      "SchoolId": 2
+    }
+  ]
+}
