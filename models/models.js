@@ -165,6 +165,24 @@ const ClassToLesson = sequelize.define(
     }
 );
 
+const TeacherToLesson = sequelize.define(
+    'TeacherToLesson',
+    {
+        isHided: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'teacher_to_lesson'
+    }
+);
 
 School.hasMany(User);
 User.belongsTo(School);
@@ -181,7 +199,7 @@ Class.belongsTo(School);
 Class.belongsToMany(Lesson, {through: ClassToLesson});
 Lesson.belongsToMany(Class, {through: ClassToLesson});
 
-Teacher.belongsToMany(Lesson, {through: 'teacher_to_lesson'});
-Lesson.belongsToMany(Teacher, {through: 'teacher_to_lesson'});
+Teacher.belongsToMany(Lesson, {through: TeacherToLesson});
+Lesson.belongsToMany(Teacher, {through: TeacherToLesson});
 
 module.exports = sequelize;

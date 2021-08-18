@@ -47,16 +47,23 @@ const index = {
     },
 
     async get(req) {
+        console.log(1)
+        let getMethods = {
+            'getOne': get.getOne,
+            'getAll': get.getAll
+        };
         try {
+            console.log(await checkPermission(req.token))
             if (await checkPermission(req.token)) {
+                console.log(2)
                 if (this.permissions.admin.availableModels.includes(req.model)) {
-                    return await get(req, permissions.admin.getAttributes);
+                    return await getMethods[req.method](req, permissions.admin.getAttributes);
                 } else {
                     return new Error('Not permission for model');
                 }
             } else {
                 if (this.permissions.user.availableModels.includes(req.model)) {
-                    return await get(req, permissions.user.getAttributes);
+                    return await getMethods[req.method](req, permissions.user.getAttributes);
                 } else {
                     return new Error('Not permission for model');
                 }

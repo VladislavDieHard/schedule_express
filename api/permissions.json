@@ -65,7 +65,7 @@
         "login",
         "isDeleted",
         "createdAt",
-        "UpdatedAt"
+        "updatedAt"
       ],
       "Class": [
         "id",
@@ -73,7 +73,7 @@
         "isHided",
         "isDeleted",
         "createdAt",
-        "UpdatedAt"
+        "updatedAt"
       ],
       "Teacher": [
         "id",
@@ -81,7 +81,7 @@
         "isHided",
         "isDeleted",
         "createdAt",
-        "UpdatedAt"
+        "updatedAt"
       ],
       "Lesson": [
         "id",
@@ -89,9 +89,7 @@
         "isHided",
         "isDeleted",
         "createdAt",
-        "UpdatedAt",
-        "ClassId",
-        "TeacherId"
+        "updatedAt"
       ],
       "School": [
         "id",
@@ -137,19 +135,20 @@
       "Class": [
         "id",
         "name",
-        "isHided"
+        "isHided",
+        "SchoolId"
       ],
       "Teacher": [
         "id",
         "name",
-        "isHided"
+        "isHided",
+        "SchoolId"
       ],
       "Lesson": [
         "id",
         "name",
         "isHided",
-        "ClassId",
-        "TeacherId"
+        "SchoolId"
       ]
     }
   }

@@ -1,4 +1,18 @@
 {
+  "School": [
+    {
+      "name": "DevSchool1",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isDeleted": "false"
+    },
+    {
+      "name": "DevSchool2",
+      "createdAt": "2021-08-11 07:33:13.999 +00:00",
+      "updatedAt": "2021-08-11 07:33:13.999 +00:00",
+      "isDeleted": "false"
+    }
+  ],
   "User": [
     {
       "login": "DevAdmin1",
@@ -22,7 +36,8 @@
       "createdAt": "2021-08-11 07:33:13.999 +00:00",
       "updatedAt": "2021-08-11 07:33:13.999 +00:00",
       "isAdmin": "false",
-      "isDeleted": "false"
+      "isDeleted": "false",
+      "SchoolId": 1
     },
     {
       "login": "DevUser2",
@@ -30,7 +45,8 @@
       "createdAt": "2021-08-11 07:33:13.999 +00:00",
       "updatedAt": "2021-08-11 07:33:13.999 +00:00",
       "isAdmin": "false",
-      "isDeleted": "false"
+      "isDeleted": "false",
+      "SchoolId": 2
     }
   ]
 }

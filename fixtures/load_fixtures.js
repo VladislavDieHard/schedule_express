@@ -11,15 +11,8 @@ const fixturesLoad = {
         Object.keys(data).forEach((key) => {
             let model = sequelize.models[key]
             data[key].forEach((item) => {
-                model.create({
-                    login: item.login,
-                    password: cryptography.cipherPass(item.password.toString()),
-                    createdAt: item.createdAt,
-                    updatedAt: item.updatedAt,
-                    isAdmin: item.isAdmin,
-                    isDeleted: item.isDeleted,
-                    SchoolId: item.SchoolId
-                });
+                if (item.password !== undefined) {item.password = cryptography.cipherPass(item.password)}
+                model.create(item);
             });
         });
     }

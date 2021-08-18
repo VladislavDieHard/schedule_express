@@ -1,7 +1,7 @@
-const models = require('../models/models');
+const sequelize = require('../models');
 
 async function checkPermission(token) {
-    let result = await models.Session.findOne({
+    let result = await sequelize.models.Session.findOne({
         where: {
             token: token
         },

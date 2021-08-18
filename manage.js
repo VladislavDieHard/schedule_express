@@ -29,7 +29,7 @@ function runServer() {
     let port = process.env['PORT'];
     try {
         server;
-        console.log(`Server started on port ${port}`);
+        console.log(`Server started on http://localhost:${port}/`);
     } catch (e) {
         console.log(e);
     }

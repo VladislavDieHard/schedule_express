@@ -16,29 +16,6 @@ router.get('/', async function(req, res, next) {
                 attributes: ['id', 'login', 'SchoolId']
             });
             let school = await user.getSchool();
-            let classes = await sequelize.models.Class.findAll({
-                where: {
-                    isDeleted: false,
-                    SchoolId: school.id
-                },
-                attributes: ['id', 'name', 'isHided']
-            });
-            let teachers = await sequelize.models.Teacher.findAll({
-                where: {
-                    isDeleted: false,
-                    SchoolId: school.id
-                },
-                attributes: ['id', 'name', 'isHided']
-            });
-            let lessons = await sequelize.models.Lesson.findAll({
-                where: {
-                    isDeleted: false,
-                    SchoolId: school.id
-                },
-                attributes: ['id', 'name', 'isHided']
-            });
-            // let classesRel = await classes.getLessons();
-            // let teachersRel = await teachers.getLessons();
 
             res.render('schedule',{
                 title: 'Расписание',
