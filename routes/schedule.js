@@ -24,12 +24,7 @@ router.get('/', async function(req, res, next) {
                 school: JSON.stringify({
                     id: school.id,
                     name: school.name
-                }),
-                teachersData: JSON.stringify(teachers),
-                lessonsData: JSON.stringify(lessons),
-                classesData: JSON.stringify(classes),
-                // classRelData: JSON.stringify(classesRel),
-                // teacherRelData: JSON.stringify(teachersRel)
+                })
             });
         } else {
             res.redirect('/');

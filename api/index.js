@@ -47,15 +47,12 @@ const index = {
     },
 
     async get(req) {
-        console.log(1)
         let getMethods = {
             'getOne': get.getOne,
             'getAll': get.getAll
         };
         try {
-            console.log(await checkPermission(req.token))
             if (await checkPermission(req.token)) {
-                console.log(2)
                 if (this.permissions.admin.availableModels.includes(req.model)) {
                     return await getMethods[req.method](req, permissions.admin.getAttributes);
                 } else {
