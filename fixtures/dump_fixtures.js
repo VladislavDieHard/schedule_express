@@ -1,4 +1,4 @@
-const models = require('../models/models');
+const sequelize = require('../models');
 const fs = require('fs');
 const cryptography = require('../modules/crypto')
 const fixtures = JSON.parse(fs.readFileSync('./fixtures.json', 'utf8'));

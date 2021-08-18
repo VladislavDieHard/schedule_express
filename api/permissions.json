@@ -15,15 +15,18 @@
       ],
       "Class": [
         "name",
-        "isHided"
+        "isHided",
+        "SchoolId"
       ],
       "Teacher": [
         "name",
-        "isHided"
+        "isHided",
+        "SchoolId"
       ],
       "Lesson": [
         "name",
-        "isHided"
+        "isHided",
+        "SchoolId"
       ],
       "School": [
         "name"
@@ -127,9 +130,7 @@
       ],
       "Lesson": [
         "name",
-        "isHided",
-        "ClassId",
-        "TeacherId"
+        "isHided"
       ]
     },
     "getAttributes": {

@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: '../db.sqlite3'
+    storage: './db.sqlite3'
 });
 
 const User = sequelize.define(
@@ -167,7 +167,7 @@ const ClassToLesson = sequelize.define(
 
 
 School.hasMany(User);
-User.hasOne(School);
+User.belongsTo(School);
 
 School.hasMany(Lesson);
 Lesson.belongsTo(School);
@@ -179,16 +179,9 @@ School.hasMany(Class);
 Class.belongsTo(School);
 
 Class.belongsToMany(Lesson, {through: ClassToLesson});
+Lesson.belongsToMany(Class, {through: ClassToLesson});
 
 Teacher.belongsToMany(Lesson, {through: 'teacher_to_lesson'});
+Lesson.belongsToMany(Teacher, {through: 'teacher_to_lesson'});
 
-// sequelize.sync({alter:true});
-
-module.exports = {
-    User: User,
-    Class: Class,
-    Teacher: Teacher,
-    Lesson: Lesson,
-    Session: Session,
-    School: School
-}
+module.exports = sequelize;

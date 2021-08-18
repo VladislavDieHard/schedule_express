@@ -1,6 +1,7 @@
 const checkPermission = require('../modules/check_permission');
 const fs = require('fs');
-const permissions = JSON.parse(fs.readFileSync('../permissions.json'));
+const path = require('path');
+const permissions = JSON.parse(fs.readFileSync(path.join(__dirname, 'permissions.json'), 'utf8'));
 const create = require('./create');
 const update = require('./update');
 const get = require('./get');
@@ -35,9 +36,9 @@ const index = {
         try {
             let isAdmin = await checkPermission(req.token);
             if (isAdmin) {
-
+                return await update(req, permissions.admin.updateAttributes);
             } else {
-
+                return await update(req, permissions.user.updateAttributes);
             }
         } catch (e) {
             result = e;
