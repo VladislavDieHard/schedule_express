@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: '../db.sqlite3'
+    storage: './db.sqlite3'
 });
 
 const User = sequelize.define(
@@ -122,24 +122,84 @@ const Session = sequelize.define(
     {
         tableName: 'sessions'
     }
-)
+);
 
-User.belongsToMany(Class, {
-    through: 'user_to_class'
-});
-User.belongsToMany(Teacher, {
-    through: 'teacher_to_class'
-});
-User.belongsToMany(Lesson, {
-    through: 'lesson_to_class'
-});
+const School = sequelize.define(
+    'School',
+    {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'schools'
+    }
+);
 
-sequelize.sync({alter: true}).then();
+const ClassToLesson = sequelize.define(
+    'ClassToLesson',
+    {
+        hours: {
+            type: DataTypes.NUMBER,
+            allowNull: false
+        },
+        isHided: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'class_to_lesson'
+    }
+);
 
-module.exports = {
-    User: User,
-    Class: Class,
-    Teacher: Teacher,
-    Lesson: Lesson,
-    Session: Session
-}
+const TeacherToLesson = sequelize.define(
+    'TeacherToLesson',
+    {
+        isHided: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
+    },
+    {
+        tableName: 'teacher_to_lesson'
+    }
+);
+
+School.hasMany(User);
+User.belongsTo(School);
+
+School.hasMany(Lesson);
+Lesson.belongsTo(School);
+
+School.hasMany(Teacher);
+Teacher.belongsTo(School);
+
+School.hasMany(Class);
+Class.belongsTo(School);
+
+Class.belongsToMany(Lesson, {through: ClassToLesson});
+Lesson.belongsToMany(Class, {through: ClassToLesson});
+
+Teacher.belongsToMany(Lesson, {through: TeacherToLesson});
+Lesson.belongsToMany(Teacher, {through: TeacherToLesson});
+
+module.exports = sequelize;

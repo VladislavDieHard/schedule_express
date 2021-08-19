@@ -1,38 +1,25 @@
-const models = require('../models/models');
+const sequelize = require('../models');
 const fs = require('fs');
-const cryptography = require('../modules/crypto')
-const fixtures = JSON.parse(fs.readFileSync('./fixtures.json', 'utf8'));
-
-const modelTypes = {
-    'User': models.User,
-    'Class': models.Class,
-    'Teacher': models.Teacher,
-    'Lesson': models.Lesson,
-    'Session': models.Session
-}
+const cryptography = require('../modules/crypto');
+const path = require('path');
+const fixtures = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures.json'), 'utf8'));
 
 const fixturesLoad = {
     addData() {
         let data = fixtures;
 
         Object.keys(data).forEach((key) => {
-            let model = modelTypes[key]
+            let model = sequelize.models[key]
             data[key].forEach((item) => {
-                model.create({
-                    login: item.login,
-                    password: cryptography.cipherPass(item.password),
-                    createdAt: item.createdAt,
-                    updatedAt: item.updatedAt,
-                    isAdmin: item.isAdmin,
-                    isDeleted: item.isDeleted,
-                });
+                if (item.password !== undefined) {item.password = cryptography.cipherPass(item.password)}
+                model.create(item);
             });
         });
     }
 }
 
 async function loadFixture() {
-    fixturesLoad.addData();
+    await fixturesLoad.addData();
 }
 
-loadFixture().then()
+module.exports = loadFixture;

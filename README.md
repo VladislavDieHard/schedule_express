@@ -1,6 +1,6 @@
 # Schedule Express project
 
-##Quick start
+Quick start
 
 To get this project up and running locally on your computer:
 
@@ -9,8 +9,8 @@ Use this commands in cmd.
 
 ```
 npm i
-node models/models.js
-node fixtures/load_fixtures.js
+npm run full_init
+npm start
 ```
 
-Open a browser to http://localhost:3000 to see the main site
+Open a browser to [http://localhost:3000](http://localhost:3000) to see the main site

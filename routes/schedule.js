@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../modules/auth_module');
-const models = require('../models/models');
+const sequelize = require('../models');
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -9,32 +9,22 @@ router.get('/', async function(req, res, next) {
     if (token !== undefined) {
         const authenticated = await auth.authUser(token, false);
         if (authenticated.verify) {
-            let classes = await models.Class.findAll({
-                where: {isDeleted: false},
-                attributes: ['id', 'name', 'isHided']
-            });
-            let teachers = await models.Teacher.findAll({
-                where: {isDeleted: false},
-                attributes: ['id', 'name', 'isHided']
-            });
-            let lessons = await models.Lesson.findAll({
-                where: {isDeleted: false},
-                attributes: ['id', 'name', 'isHided']
-            });
-            let user = await models.User.findOne({
+            let user = await sequelize.models.User.findOne({
                 where: {
                     login: authenticated.login
                 },
-                attributes: ['id', 'login']
+                attributes: ['id', 'login', 'SchoolId']
             });
+            let school = await user.getSchool();
 
             res.render('schedule',{
                 title: 'Расписание',
                 username: user.login,
                 user: JSON.stringify(user),
-                teachersData: JSON.stringify(teachers),
-                lessonsData: JSON.stringify(lessons),
-                classesData: JSON.stringify(classes),
+                school: JSON.stringify({
+                    id: school.id,
+                    name: school.name
+                })
             });
         } else {
             res.redirect('/');

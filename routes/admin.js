@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../modules/auth_module');
-const models = require('../models/models');
+const sequelize = require('../models');
 
 router.get('/', async function(req, res, next) {
     const token = req.cookies.token;
@@ -9,11 +9,11 @@ router.get('/', async function(req, res, next) {
     if (token !== undefined) {
         const authenticated = await auth.authUser(token);
         if (authenticated.verify) {
-            let user = await models.User.findOne({
+            let user = await sequelize.models.User.findOne({
                 where: {login: authenticated.login},
                 attributes: ['id', 'login']
             });
-            let users = await models.User.findAll({
+            let users = await sequelize.models.User.findAll({
                 attributes: ['id', 'login', 'isDeleted', 'createdAt', 'updatedAt', ]
             });
 
