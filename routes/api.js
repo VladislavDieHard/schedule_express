@@ -17,11 +17,10 @@ router.post('/create-relation', async (req, res) => {
 });
 
 router.post('/update', async (req, res) => {
-    try {
-        res.send(await api.update(req.body))
-    } catch (e) {
-        res.send(e.message);
-    }
+    console.log(req.body)
+    await api.update(req.body)
+        .then((result) => {res.send(result)})
+        .catch((e) => {res.send(e.message)});
 });
 
 router.post('/get', async (req, res) => {

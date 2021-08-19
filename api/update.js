@@ -1,20 +1,20 @@
 const sequelize = require('../models');
 
 async function update(req, permissions) {
-    console.log(req)
-    let fstTarget = await sequelize.models[req.fstModel].findOne({
-        where: {
-            id: req.data.fstId
+    return new Promise(async function (resolve, reject) {
+        if (contains(permissions[req.model], Object.keys(req.data))) {
+            resolve(Boolean((await sequelize.models[req.model].update(req.data, {where: req.where}))[0]));
+        } else {
+            reject(new Error('Have not permission for model attributes'));
         }
     });
-    let secTarget = await sequelize.models[req.secModel].findOne({
-        where: {
-            id: req.data.secId
-        }
-    });
-    let result = await fstTarget.addLessons(secTarget);
-    console.log(result);
-    return result;
+}
+
+function contains(where, what) {
+    for ( let i=0; i < what.length; i++ ) {
+        if ( where.indexOf(what[i]) == -1 ) return false;
+    }
+    return true;
 }
 
 module.exports = update;
