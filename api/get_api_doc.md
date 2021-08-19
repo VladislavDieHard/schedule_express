@@ -51,3 +51,11 @@ The admin will receive the data in this form
     }
 ]
 ```
+
+# Update
+
+Get method takes request like
+
+```
+example
+```

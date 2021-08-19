@@ -12,38 +12,48 @@ const index = {
     permission: null,
 
     async create(req) {
-        try {
-            if (await checkPermission(req.token)) {
+        return new Promise((resolve, reject) => {
+            if (checkPermission(req.token)) {
                 if (this.permissions.admin.availableModels.includes(req.model)) {
-                    return await create(req, permissions.admin.createAttributes);
+                    create(req, permissions.admin.createAttributes)
+                        .then((result) => {resolve(result)})
+                        .catch((err) => {reject(err)});
                 } else {
-                    return new Error('Not permission for model');
+                    reject(new Error('Not permission for model'));
                 }
             } else {
                 if (this.permissions.user.availableModels.includes(req.model)) {
-                    return await create(req, permissions.user.createAttributes);
+                    create(req, permissions.user.createAttributes)
+                        .then((result) => {resolve(result)})
+                        .catch((err) => {reject(err)});
                 } else {
-                    return new Error('Not permission for model');
+                    reject(new Error('Not permission for model'));
                 }
             }
-        } catch (e) {
-            return e;
-        }
+        });
     },
 
     async update(req) {
-        let result;
-        try {
-            let isAdmin = await checkPermission(req.token);
-            if (isAdmin) {
-                return await update(req, permissions.admin.updateAttributes);
+        return new Promise((resolve, reject) => {
+            if (checkPermission(req.token)) {
+                if (this.permissions.admin.availableModels.includes(req.model)) {
+                    console.log(req)
+                    update(req, permissions.admin.updateAttributes)
+                        .then((result) => {resolve(result)})
+                        .catch((err) => {reject(err)});
+                } else {
+                    reject(new Error('Not permission for model'));
+                }
             } else {
-                return await update(req, permissions.user.updateAttributes);
+                if (this.permissions.user.availableModels.includes(req.model)) {
+                    update(req, permissions.user.updateAttributes)
+                        .then((result) => {resolve(result)})
+                        .catch((err) => {reject(err)});
+                } else {
+                    reject(new Error('Not permission for model'));
+                }
             }
-        } catch (e) {
-            result = e;
-        }
-        return result;
+        });
     },
 
     async get(req) {
