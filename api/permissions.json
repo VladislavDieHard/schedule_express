@@ -15,17 +15,14 @@
       ],
       "Class": [
         "name",
-        "isHided",
         "SchoolId"
       ],
       "Teacher": [
         "name",
-        "isHided",
         "SchoolId"
       ],
       "Lesson": [
         "name",
-        "isHided",
         "SchoolId"
       ],
       "School": [

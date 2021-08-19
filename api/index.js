@@ -12,23 +12,25 @@ const index = {
     permission: null,
 
     async create(req) {
-        try {
-            if (await checkPermission(req.token)) {
+        return new Promise((resolve, reject) => {
+            if (checkPermission(req.token)) {
                 if (this.permissions.admin.availableModels.includes(req.model)) {
-                    return await create(req, permissions.admin.createAttributes);
+                    create(req, permissions.admin.createAttributes)
+                        .then((result) => {resolve(result)})
+                        .catch((err) => {reject(err)});
                 } else {
-                    return new Error('Not permission for model');
+                    reject(new Error('Not permission for model'));
                 }
             } else {
                 if (this.permissions.user.availableModels.includes(req.model)) {
-                    return await create(req, permissions.user.createAttributes);
+                    create(req, permissions.user.createAttributes)
+                        .then((result) => {resolve(result)})
+                        .catch((err) => {reject(err)});
                 } else {
-                    return new Error('Not permission for model');
+                    reject(new Error('Not permission for model'));
                 }
             }
-        } catch (e) {
-            return e;
-        }
+        });
     },
 
     async update(req) {
