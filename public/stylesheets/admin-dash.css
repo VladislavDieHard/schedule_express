@@ -15,7 +15,7 @@
   width: 150px;
   height: 20px; }
 
-.sidebar {
+.sidebar-left {
   height: 100vh;
   width: 25%;
   background-color: #37506A; }
@@ -30,6 +30,35 @@
   width: 100%;
   height: 100vh;
   background-color: #EDEDED; }
+
+button.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #37506A;
+  outline: none;
+  transition: .4s; }
+
+button.accordion.active,
+button.accordion:hover {
+  background-color: #ddd; }
+
+div.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none; }
+
+div.panel.show {
+  display: block; }
+
+.element {
+  border: 2px solid #37506A;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 10px; }
 
 .btn {
   width: 100px;
