@@ -5,7 +5,8 @@
       "Class",
       "Teacher",
       "Lesson",
-      "School"
+      "School",
+      "Relation"
     ],
     "createAttributes": {
       "User": [
@@ -101,7 +102,8 @@
     "availableModels": [
       "Class",
       "Teacher",
-      "Lesson"
+      "Lesson",
+      "Relation"
     ],
     "createAttributes": {
       "Class": [

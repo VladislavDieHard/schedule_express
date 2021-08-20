@@ -196,10 +196,10 @@ Teacher.belongsTo(School);
 School.hasMany(Class);
 Class.belongsTo(School);
 
-Class.belongsToMany(Lesson, {through: ClassToLesson});
+Class.belongsToMany(Lesson, {as: 'Relation', through: ClassToLesson});
 Lesson.belongsToMany(Class, {through: ClassToLesson});
 
-Teacher.belongsToMany(Lesson, {through: TeacherToLesson});
+Teacher.belongsToMany(Lesson, {as: 'Relation', through: TeacherToLesson});
 Lesson.belongsToMany(Teacher, {through: TeacherToLesson});
 
 module.exports = sequelize;
