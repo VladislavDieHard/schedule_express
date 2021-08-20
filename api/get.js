@@ -19,7 +19,7 @@ const get = {
                 where: req.where,
                 attributes: permission[req.model],
                 include: req.include
-            }).toJSON()
+            })
                 .then((result) => {resolve(result);})
                 .catch((err) => {reject(err);});
         });
