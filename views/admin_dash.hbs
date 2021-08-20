@@ -2,6 +2,7 @@
 <script src="javascripts/admindash-front.js"></script>
 <script src="javascripts/adminDashFront/updateData.js"></script>
 <script src="javascripts/adminDashFront/adminDashFrontController.js"></script>
+<script src="javascripts/adminDashFront/showData.js"></script>
 
 <div class="wrapper">
     <header class="header">
@@ -15,24 +16,24 @@
     <div class="content">
         <div class="sidebar-left">
             <div class="buttons-objects">
-                <button onclick="adminDashFront.getData('Teacher'), adminDashApi(0, this)" class="teachers-btn btn">teachers</button>
-                <button onclick="adminDashFront.getData('Class'), adminDashApi(0, this)" class="classes-btn btn">classes</button>
-                <button onclick="adminDashFront.getData('Lesson'), adminDashApi(0, this)" class="lessons-btn btn">lessons</button>
-                <button onclick="adminDashFront.getData('User')" class=" btn">Users</button>
+                <button onclick="addData.getData('Teacher', 'api/get'), adminDashApi(0, this)" class="teachers-btn btn">teachers</button>
+                <button onclick="addData.getData('Class'  , 'api/get'), adminDashApi(0, this)" class="classes-btn btn">classes</button>
+                <button onclick="addData.getData('Lesson' , 'api/get'), adminDashApi(0, this)" class="lessons-btn btn">lessons</button>
+                <button onclick="addData.getData('User'   , 'api/get')" class=" btn">Users</button>
             </div>
         </div>
 
         <div class="object-content">
             <div class="teachers object-item object-item-active" id="teacherId">
-                <script>
-                    let accordion = document.getElementsByClassName('accordion')
-                    for(let i = 0; i < accordion.length; i++){
-                        accordion[i].onclick = function () {
-                            this.classList.toggle('active')
-                            this.nextElementSibling.classList.toggle('show')
-                        }
-                    }
-                </script>
+<!--                <script>-->
+<!--                    let accordion = document.getElementsByClassName('accordion')-->
+<!--                    for(let i = 0; i < accordion.length; i++){-->
+<!--                        accordion[i].onclick = function () {-->
+<!--                            this.classList.toggle('active')-->
+<!--                            this.nextElementSibling.classList.toggle('show')-->
+<!--                        }-->
+<!--                    }-->
+<!--                </script>-->
             </div>
             <div class="classes object-item">
                 <ul class="classes-list">
@@ -84,6 +85,4 @@
     </div>
     <script onload="admindashInit()"></script>
     <script onload="accordionDown()"></script>
-    <script src="javascripts/adminDashFront/showData.js"></script>
-
 </div>

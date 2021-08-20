@@ -1,9 +1,9 @@
-async function update(id, model, status,) {
+async function update(id,login, model, status,) {
     let Data = {
         "token": document.cookie.split("; ")[0].split("=")[1],
         "model": model,
         "data": {
-            "login": "Dodic",
+            "login": login,
             'isDeleted' : status
         },
         "where": {

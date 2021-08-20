@@ -2,7 +2,7 @@ const sequelize = require('../models');
 
 async function create(req, permissions) {
     return new Promise(function (resolve, reject) {
-        if (contains(Object.keys(req.data), permissions[req.model])) {
+        if (permissions[req.model], contains(Object.keys(req.data), )) {
             try {
                 resolve(sequelize.models[req.model].create(req.data));
             } catch (e) {

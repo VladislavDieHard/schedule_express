@@ -9,7 +9,9 @@ function accordionDown() {
 }
 
 function read(id) {
-    let login = this.document.getElementById(`login${id}`).value
+    let login     = this.document.getElementById(`login${id}`).value
+    let model     = this.document.getElementById(`model${id}`).value
     let isDeleted = this.document.getElementById(`isDeleted${id}`).value
-    console.log(login, isDeleted)
+
+    update(id, login, model, isDeleted)
 }
