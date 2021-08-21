@@ -48,8 +48,8 @@ const addData = {
         elementCont.className = 'panel'
         elementCont.innerHTML = (`<table>
                                         <tr>
-                                            <td>login</td>
-                                            <td><input id="login${req.id}" value='${req.login}'></td>
+                                            <td>password</td>
+                                            <td><input id="password${req.id}" value='${req.login}'></td>
                                             <td>isDeleted</td>
                                             <td><select id="isDeleted${req.id}" name="status[]" >
                                                 <option value="true">True</option>
@@ -57,7 +57,7 @@ const addData = {
                                             </select></td>
                                         </tr>
                                       </table>
-                                      <button onclick="read(${req.id})">Update</button>
+                                      <button onclick="resUpdate.updateUser(${req.id})">Update</button>
 `)
 
         parent.appendChild(elementCont)
@@ -76,6 +76,8 @@ const addData = {
                                     <td><input disabled value='${req.name}'></td>
                                     <td>isDeleted</td>
                                     <td><input disabled value='${req.isDeleted}'></td>
+                                    <td>Model</td>
+                                    <td><input id='model${req.id}' value='${itemModel}'></td>
                                 </tr>
                                 <tr>
                                     <td>createdAt</td>
@@ -83,7 +85,9 @@ const addData = {
                                     <td>updatedAt</td>
                                     <td><input disabled value='${req.updatedAt}'></td>
                                 </tr>
-                              </table>`)
+                              </table>
+                              
+`)
         parent.appendChild(element)
 
         let elementCont = document.createElement('div')
@@ -91,15 +95,10 @@ const addData = {
         elementCont.innerHTML = (`<table>
                                         <tr>
                                             <td>name</td>
-                                            <td><input id="login${req.id}" value='${req.name}'></td>
-                                            <td>isDeleted</td>
-                                            <td><select id="isDeleted${req.id}" name="status[]" >
-                                                <option value="true">True</option>
-                                                <option value="false">False</option>
-                                            </select></td>
+                                            <td><input id="name${req.id}" value='${req.name}'></td>                                          
                                         </tr>
                                       </table>
-                                      <button onclick="read(${req.id})">Проверка</button>
+                                      <button onclick="resUpdate.update(${req.id})">Update</button>
             `)
         parent.appendChild(elementCont)
     }

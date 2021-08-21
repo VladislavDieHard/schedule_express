@@ -25,15 +25,17 @@
 
         <div class="object-content">
             <div class="teachers object-item object-item-active" id="teacherId">
-<!--                <script>-->
-<!--                    let accordion = document.getElementsByClassName('accordion')-->
-<!--                    for(let i = 0; i < accordion.length; i++){-->
-<!--                        accordion[i].onclick = function () {-->
-<!--                            this.classList.toggle('active')-->
-<!--                            this.nextElementSibling.classList.toggle('show')-->
-<!--                        }-->
-<!--                    }-->
-<!--                </script>-->
+                <script>
+                    function accordionDown() {
+                        let accordion = document.getElementsByClassName('accordion')
+                        for(let i = 0; i < accordion.length; i++){
+                            accordion[i].onclick = function () {
+                                this.classList.toggle('active')
+                                this.nextElementSibling.classList.toggle('show')
+                            }
+                        }
+                    }
+                </script>
             </div>
             <div class="classes object-item">
                 <ul class="classes-list">
@@ -84,5 +86,4 @@
         <div class="data-users" data-users="{{users}}"></div>
     </div>
     <script onload="admindashInit()"></script>
-    <script onload="accordionDown()"></script>
 </div>
