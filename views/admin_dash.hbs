@@ -1,25 +1,19 @@
 <link rel='stylesheet' href='/stylesheets/admin-dash.css' />
-<script src="javascripts/admindash-front.js"></script>
-<script src="javascripts/adminDashFront/updateData.js"></script>
-<script src="javascripts/adminDashFront/adminDashFrontController.js"></script>
-<script src="javascripts/adminDashFront/showData.js"></script>
+<script src="javascripts/admin_dash_front/adminDashFront.js"></script>
+<script src="javascripts/admin_dash_front/updateData.js"></script>
+<script src="javascripts/admin_dash_front/deleteData.js"></script>
 
 <div class="wrapper">
     <header class="header">
-        <div class="user-input">
-            <h4>Получить данные пользователя</h4>
-            <input list="users" class="user-choose">
-            <datalist id="users" class="users-datalist"></datalist>
-            <button onclick="admindashInit()" class="get-user-data">Get</button>
-        </div>
+        <h1>Admin panel</h1>
     </header>
     <div class="content">
         <div class="sidebar-left">
             <div class="buttons-objects">
-                <button onclick="addData.getData('Teacher', 'api/get'), adminDashApi(0, this)" class="teachers-btn btn">teachers</button>
-                <button onclick="addData.getData('Class'  , 'api/get'), adminDashApi(0, this)" class="classes-btn btn">classes</button>
-                <button onclick="addData.getData('Lesson' , 'api/get'), adminDashApi(0, this)" class="lessons-btn btn">lessons</button>
-                <button onclick="addData.getData('User'   , 'api/get')" class=" btn">Users</button>
+                <button onclick="addData.getData('Teacher')" class="teachers-btn btn">teachers</button>
+                <button onclick="addData.getData('Class') " class="classes-btn btn">classes</button>
+                <button onclick="addData.getData('Lesson')" class="lessons-btn btn">lessons</button>
+                <button onclick="addData.getData('User')" class=" btn">Users</button>
             </div>
         </div>
 

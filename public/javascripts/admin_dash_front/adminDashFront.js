@@ -1,13 +1,12 @@
 const addData = {
-    async getData(model, api){
+    async getData(model){
         let request = {
             token: document.cookie.split("; ")[0].split("=")[1],
             method: 'getAll',
             model: model,
             includeModel: "School"
         }
-        let response = await fetch(api, {
-            method: 'POST',
+        let response = await fetch('api/get', {
             method: 'POST',
             headers: {'Content-Type': 'application/json;charset=utf-8'},
             body: JSON.stringify(request)
@@ -26,38 +25,38 @@ const addData = {
                                 <tr>
                                     <td>id</td>
                                     <td><input disabled value='${req.id}'></td>
-                                    <td>login</td>
+                                    <td>Логин</td>
                                     <td><input disabled value='${req.login}'></td>
-                                    <td>isDeleted</td>
+                                    <td>Удален</td>
                                     <td><input disabled value='${req.isDeleted}'></td>
-                                    <td>Model</td>
+                                    <td>Модель</td>
                                     <td><input id='model${req.id}' value='${itemModel}'></td>
                                 </tr>
                                 <tr>
-                                    <td>createdAt</td>
+                                    <td>Создан</td>
                                     <td><input disabled value='${req.createdAt}'></td>
-                                    <td>updatedAt</td>
+                                    <td>Обновлен</td>
                                     <td><input disabled value='${req.updatedAt}'></td>
-                                    <td>school</td>
+                                    <td>Школа</td>
                                     <td><input disabled value='${req.school}'></td>
                                 </tr>
                               </table>`)
         parent.appendChild(element)
-
         let elementCont = document.createElement('div')
         elementCont.className = 'panel'
         elementCont.innerHTML = (`<table>
                                         <tr>
-                                            <td>password</td>
+                                            <td>Пароль</td>
                                             <td><input id="password${req.id}" value='${req.login}'></td>
-                                            <td>isDeleted</td>
-                                            <td><select id="isDeleted${req.id}" name="status[]" >
-                                                <option value="true">True</option>
-                                                <option value="false">False</option>
+                                            <td>Удалить</td>
+                                            <td><select id="status${req.id}" name="status[]" >
+                                                <option value='true'>Да</option>
+                                                <option value="false">Нет</option>
                                             </select></td>
                                         </tr>
                                       </table>
                                       <button onclick="resUpdate.updateUser(${req.id})">Update</button>
+                                      <button onclick="deleteData(${req.id})">Delete</button>
 `)
 
         parent.appendChild(elementCont)
@@ -85,19 +84,14 @@ const addData = {
                                     <td>updatedAt</td>
                                     <td><input disabled value='${req.updatedAt}'></td>
                                 </tr>
-                              </table>
-                              
-`)
+                              </table>`)
         parent.appendChild(element)
 
         let elementCont = document.createElement('div')
         elementCont.className = 'panel'
-        elementCont.innerHTML = (`<table>
-                                        <tr>
-                                            <td>name</td>
-                                            <td><input id="name${req.id}" value='${req.name}'></td>                                          
-                                        </tr>
-                                      </table>
+        elementCont.innerHTML = (`<p>name</p>
+                                  <td><input id="name${req.id}" value='${req.name}'></td>                                          
+                                       
                                       <button onclick="resUpdate.update(${req.id})">Update</button>
             `)
         parent.appendChild(elementCont)

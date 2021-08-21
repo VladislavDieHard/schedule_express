@@ -3,8 +3,8 @@ const resUpdate = {
         let password  = document.getElementById(`password${id}`).value
         let model     = document.getElementById(`model${id}`).value
 
-        let Data = {
-            "token": "3fc1e31e1ddd2308802deeb62f7f8eff17be414b3e2fb95d1e6d3aebcb68302b",
+        let request = {
+            "token": document.cookie.split("; ")[0].split("=")[1],
             "model": model,
             "data": {
                 "password": password
@@ -17,7 +17,7 @@ const resUpdate = {
         let response = await fetch('api/update/item', {
             method : 'POST',
             headers: {'Content-Type': 'application/json;charset=utf-8'},
-            body: JSON.stringify(Data)});
+            body: JSON.stringify(request)});
         const result = await response.json()
         console.log(result)
     },
@@ -42,6 +42,5 @@ const resUpdate = {
             headers: {'Content-Type': 'application/json;charset=utf-8'},
             body: JSON.stringify(Data)});
         const result = await response.json()
-        console.log(result)
     }
 }
