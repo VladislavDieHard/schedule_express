@@ -1,30 +1,35 @@
 <link rel='stylesheet' href='/stylesheets/admin-dash.css' />
-<script src="javascripts/admindash-front.js"></script>
+<script src="javascripts/admin_dash_front/adminDashFront.js"></script>
+<script src="javascripts/admin_dash_front/updateData.js"></script>
+<script src="javascripts/admin_dash_front/deleteData.js"></script>
 
 <div class="wrapper">
     <header class="header">
-        <div class="user-input">
-            <h4>Получить данные пользователя</h4>
-            <input list="users" class="user-choose">
-            <datalist id="users" class="users-datalist"></datalist>
-            <button onclick="admindashInit()" class="get-user-data">Get</button>
-        </div>
+        <h1>Admin panel</h1>
     </header>
     <div class="content">
-        <div class="buttons-objects">
-            <button onclick="adminDashApi(0, this)" class="teachers-btn btn">teachers</button>
-            <button onclick="adminDashApi(0, this)" class="classes-btn btn">classes</button>
-            <button onclick="adminDashApi(0, this)" class="lessons-btn btn">lessons</button>
-            <button onclick="adminDashApi(0, this)" class="update-btn btn">update</button>
-            <button onclick="adminDashApi(0, this)" class="add-btn btn">add</button>
+        <div class="sidebar-left">
+            <div class="buttons-objects">
+                <button onclick="addData.getData('Teacher')" class="teachers-btn btn">teachers</button>
+                <button onclick="addData.getData('Class') " class="classes-btn btn">classes</button>
+                <button onclick="addData.getData('Lesson')" class="lessons-btn btn">lessons</button>
+                <button onclick="addData.getData('User')" class=" btn">Users</button>
+            </div>
         </div>
+
         <div class="object-content">
-            <div class="teachers object-item object-item-active">
-                <ul class="teacher-list">
-                    <li class="teacher-item"></li>
-                    <li class="teacher-item"></li>
-                    <li class="teacher-item"></li>
-                </ul>
+            <div class="teachers object-item object-item-active" id="teacherId">
+                <script>
+                    function accordionDown() {
+                        let accordion = document.getElementsByClassName('accordion')
+                        for(let i = 0; i < accordion.length; i++){
+                            accordion[i].onclick = function () {
+                                this.classList.toggle('active')
+                                this.nextElementSibling.classList.toggle('show')
+                            }
+                        }
+                    }
+                </script>
             </div>
             <div class="classes object-item">
                 <ul class="classes-list">

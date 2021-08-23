@@ -1,11 +1,20 @@
 const sequelize = require('../models');
+const crypto = require("../modules/crypto")
 
 async function create(req, permissions) {
     return new Promise(function (resolve, reject) {
         if (contains(Object.keys(req.data), permissions[req.model])) {
             try {
-                resolve(sequelize.models[req.model].create(req.data));
+                if (req.data.password){
+                    let password = req.data.password
+                    req.data.password= crypto.cipherPass(password)
+                    console.log(req)
+                }
+                sequelize.models[req.model].create(req.data)
+                    .then((result) => {resolve(result)})
+                    .catch((e) => {reject(e)})
             } catch (e) {
+
                 reject(e);
             }
         } else {
