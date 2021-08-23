@@ -1,7 +1,9 @@
 <link rel='stylesheet' href='/stylesheets/admin-dash.css' />
+<script src="javascripts/admin_dash_front/response.js"></script>
 <script src="javascripts/admin_dash_front/adminDashFront.js"></script>
 <script src="javascripts/admin_dash_front/updateData.js"></script>
 <script src="javascripts/admin_dash_front/deleteData.js"></script>
+
 
 <div class="wrapper">
     <header class="header">
@@ -10,10 +12,10 @@
     <div class="content">
         <div class="sidebar-left">
             <div class="buttons-objects">
-                <button onclick="addData.getData('Teacher')" class="teachers-btn btn">teachers</button>
-                <button onclick="addData.getData('Class') " class="classes-btn btn">classes</button>
+                <button onclick="addData.getData('User')" class="teachers-btn btn">Users</button>
+                <button onclick="addData.getData('Class')" class="classes-btn btn">classes</button>
                 <button onclick="addData.getData('Lesson')" class="lessons-btn btn">lessons</button>
-                <button onclick="addData.getData('User')" class=" btn">Users</button>
+                <button onclick="addData.getData('Teacher')" class=" btn">teacher</button>
             </div>
         </div>
 

@@ -1,44 +1,33 @@
 const addData = {
     async getData(model){
-        let request = {
-            token: document.cookie.split("; ")[0].split("=")[1],
-            method: 'getAll',
-            model: model,
-            includeModel: "School"
-        }
-        let response = await fetch('api/get', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json;charset=utf-8'},
-            body: JSON.stringify(request)
-        })
-        const result = await response.json()
-        result.forEach(element => addModels[model](element, model))
+        let req  = table[model]
+        let data = await req.get()
+        console.log(data[1].model)
+        data.forEach(element => this.dataOutputUser(element))
     },
 
-    async addUser(req, itemModel){
+    async dataOutputUser(data){
         let parent = document.getElementById('teacherId')
         let element = document.createElement('button')
         element.className = 'accordion'
         element.onclick = accordionDown
-        element.id = req.id
+        element.id = data.id
         element.innerHTML = (` <table>
                                 <tr>
                                     <td>id</td>
-                                    <td><input disabled value='${req.id}'></td>
-                                    <td>Логин</td>
-                                    <td><input disabled value='${req.login}'></td>
+                                    <td><input disabled value='${data.id}'></td>
+                                    <td>Имя</td>
+                                    <td><input disabled value='${data.login}'></td>
                                     <td>Удален</td>
-                                    <td><input disabled value='${req.isDeleted}'></td>
-                                    <td>Модель</td>
-                                    <td><input id='model${req.id}' value='${itemModel}'></td>
+                                    <td><input disabled value='${data.isDeleted}'></td>
                                 </tr>
                                 <tr>
                                     <td>Создан</td>
-                                    <td><input disabled value='${req.createdAt}'></td>
+                                    <td><input disabled value='${data.createdAt}'></td>
                                     <td>Обновлен</td>
-                                    <td><input disabled value='${req.updatedAt}'></td>
+                                    <td><input disabled value='${data.updatedAt}'></td>
                                     <td>Школа</td>
-                                    <td><input disabled value='${req.school}'></td>
+                                    <td><input disabled value='${data.school}'></td>
                                 </tr>
                               </table>`)
         parent.appendChild(element)
@@ -47,60 +36,25 @@ const addData = {
         elementCont.innerHTML = (`<table>
                                         <tr>
                                             <td>Пароль</td>
-                                            <td><input id="password${req.id}" value='${req.login}'></td>
+                                            <td><input id="password${data.id}" value='${data.login}'></td>
                                             <td>Удалить</td>
-                                            <td><select id="status${req.id}" name="status[]" >
+                                            <td><select id="status${data.id}" name="status[]" >
                                                 <option value='true'>Да</option>
                                                 <option value="false">Нет</option>
                                             </select></td>
                                         </tr>
                                       </table>
-                                      <button onclick="resUpdate.updateUser(${req.id})">Update</button>
-                                      <button onclick="deleteData(${req.id})">Delete</button>
+                                      <button onclick="resUpdate.updateUser(${data.id})">Update</button>
+                                      <button onclick="deleteData(${data.id})">Delete</button>
 `)
 
-        parent.appendChild(elementCont)
-    },
-    async add(req, itemModel){
-        let parent = document.getElementById('teacherId')
-        let element = document.createElement('button')
-        element.className = 'accordion'
-        element.onclick = accordionDown
-        element.id = req.id
-        element.innerHTML = (` <table>
-                                <tr>
-                                    <td>id</td>
-                                    <td><input disabled value='${req.id}'></td>
-                                    <td>name</td>
-                                    <td><input disabled value='${req.name}'></td>
-                                    <td>isDeleted</td>
-                                    <td><input disabled value='${req.isDeleted}'></td>
-                                    <td>Model</td>
-                                    <td><input id='model${req.id}' value='${itemModel}'></td>
-                                </tr>
-                                <tr>
-                                    <td>createdAt</td>
-                                    <td><input disabled value='${req.createdAt}'></td>
-                                    <td>updatedAt</td>
-                                    <td><input disabled value='${req.updatedAt}'></td>
-                                </tr>
-                              </table>`)
-        parent.appendChild(element)
-
-        let elementCont = document.createElement('div')
-        elementCont.className = 'panel'
-        elementCont.innerHTML = (`<p>name</p>
-                                  <td><input id="name${req.id}" value='${req.name}'></td>                                          
-                                       
-                                      <button onclick="resUpdate.update(${req.id})">Update</button>
-            `)
         parent.appendChild(elementCont)
     }
 }
 
-let addModels ={
-    "User"    : addData.addUser,
-    "Teacher" : addData.add,
-    "Lesson"  : addData.add,
-    "Class"   : addData.add,
+const table = {
+    'User'    : new User(),
+    'Teacher' : new Teacher(),
+    'Class'   : new Class(),
+    'Lesson'  : new Lesson(),
 }

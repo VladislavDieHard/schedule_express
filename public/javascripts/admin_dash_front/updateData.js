@@ -14,12 +14,7 @@ const resUpdate = {
             }
         }
 
-        let response = await fetch('api/update/item', {
-            method : 'POST',
-            headers: {'Content-Type': 'application/json;charset=utf-8'},
-            body: JSON.stringify(request)});
-        const result = await response.json()
-        console.log(result)
+        await response(request)
     },
 
     async update(id) {
