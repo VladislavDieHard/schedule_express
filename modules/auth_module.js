@@ -20,6 +20,9 @@ const auth = {
             if (user.password === password) {
                 token = cryptography.createToken(user);
 
+                console.log(token)
+                console.log(sequelize.models.Session)
+
                 await sequelize.models.Session.create(
                     {
                         login: dbUser.login,
