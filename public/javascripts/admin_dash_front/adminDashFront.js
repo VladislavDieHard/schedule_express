@@ -1,21 +1,20 @@
 const addData = {
-    async getDataUser(model){
+    async getDataUser(model, path){
         let req  = table[model]
         let data = await req.get()
         data.forEach(element => this.dataOutputUser(element, model))
     },
-    async getData(model){
+    async getData(model, path){
         let req  = table[model]
         let data = await req.get()
-        data.forEach(element => this.dataOutput(element, model))
+        data.forEach(element => this.dataOutput(element, model, path))
     },
     async update(model){
         let req = table[model]
         let data = await req.update()
-        await console.log(data)
     },
     async dataOutputUser(data, model){
-        let parent = document.getElementById('teacherId')
+        let parent = document.getElementById('tab_01')
         let element = document.createElement('button')
         element.className = 'accordion'
         element.onclick = accordionDown
@@ -37,7 +36,7 @@ const addData = {
                                     <td>Обновлен</td>
                                     <td><input disabled value='${data.updatedAt}'></td>
                                     <td>Школа</td>
-                                    <td><input disabled value='${data.school}'></td>
+                                    <td><input disabled value='${data.SchoolId}'></td>
                                 </tr>
                               </table>`)
         parent.appendChild(element)
@@ -57,8 +56,8 @@ const addData = {
                                       <button onclick="addData.update(${model})">Update</button>`)
         parent.appendChild(elementCont)
     },
-    async dataOutput(data, model){
-        let parent = document.getElementById('teacherId')
+    async dataOutput(data, model, path){
+        let parent = document.getElementById(path)
         let element = document.createElement('button')
         element.className = 'accordion'
         element.onclick = accordionDown
@@ -80,7 +79,7 @@ const addData = {
                                     <td>Обновлен</td>
                                     <td><input disabled value='${data.updatedAt}'></td>
                                     <td>Школа</td>
-                                    <td><input disabled value='${data.school}'></td>
+                                    <td><input disabled value='${data.SchoolId}'></td>
                                 </tr>
                               </table>`)
         parent.appendChild(element)
@@ -104,8 +103,8 @@ const addData = {
 }
 
 const table = {
-    'User'       : new User(),
-    // 'Teacher' : new Teacher(),
-    // 'Class'   : new Class(),
-    // 'Lesson'  : new Lesson(),
+    'User'    : new User(),
+    'Teacher' : new Teacher(),
+    'Class'   : new Class(),
+    'Lesson'  : new Lesson(),
 }

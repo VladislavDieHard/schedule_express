@@ -6,18 +6,20 @@
     <header class="header">
         <h1>Admin panel</h1>
     </header>
-    <div class="content">
-        <div class="sidebar-left">
-            <div class="buttons-objects">
-                <button onclick="addData.getDataUser('User')" class="teachers-btn btn">Users</button>
-                <button onclick="addData.getData('Class')" class="classes-btn btn">classes</button>
-                <button onclick="addData.getData('Lesson')" class="lessons-btn btn">lessons</button>
-                <button onclick="addData.getData('Teacher')" class=" btn">teacher</button>
+    <div class="main">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-item">
+                    <nav class="tabs-items">
+                        <a href="#tab_01" class="tabs-item">User</a>
+                        <a href="#tab_02" class="tabs-item">Teacher</a>
+                        <a href="#tab_03" class="tabs-item">Lesson</a>
+                        <a href="#tab_04" class="tabs-item">Class</a>
+                    </nav>
+                </div>
             </div>
         </div>
-
-        <div class="object-content">
-            <div class="teachers object-item object-item-active" id="teacherId">
+            <div class="content">
                 <script>
                     function accordionDown() {
                         let accordion = document.getElementsByClassName('accordion')
@@ -29,54 +31,17 @@
                         }
                     }
                 </script>
-            </div>
-            <div class="classes object-item">
-                <ul class="classes-list">
-                    <li class="class-item"></li>
-                    <li class="class-item"></li>
-                    <li class="class-item"></li>
-                </ul>
-            </div>
-            <div class="lessons object-item">
-                <ul class="lessons-list">
-                    <li class="lesson-item"></li>
-                    <li class="lesson-item"></li>
-                    <li class="lesson-item"></li>
-                </ul>
-            </div>
-            <div class="update object-item">
-                <div class="update-input">
-                    <input list="objects">
-                    <datalist id="objects">
-                        <option value=""></option>
-                    </datalist>
-                    <button class="update-change-btn">Change on</button>
-                </div>
-                <div class="update-menu">
-                    <div class="update-list">
-                        <ul class="update-object-list">
-                            <li class="update-object-item"></li>
-                        </ul>
-                    </div>
-                    <div class="update-item">
-                        <h3>Item fields</h3>
-                        <div class="input-fields">
-                            <input class="" type="text">
-                        </div>
-                        <button class="update-btn">Update it</button>
-                    </div>
-                </div>
-            </div>
-            <div class="add object-item">
-                div.
+                <div id="tab_01" class="user-content tabs" ></div>
+                <div id="tab_02" class="teacher-content tabs" ></div>
+                <div id="tab_03" class="lesson-content tabs" ></div>
+                <div id="tab_04" class="class-content tabs" ></div>
             </div>
         </div>
     </div>
-    <footer class="footer">
-
-    </footer>
-    <div class="data">
-        <div class="data-users" data-users="{{users}}"></div>
-    </div>
-    <script onload="admindashInit()"></script>
+   <body onload="
+   addData.getDataUser('User')
+   addData.getData('Teacher', 'tab_02')
+   addData.getData('Lesson', 'tab_03')
+   addData.getData('Class', 'tab_04')
+"></body>
 </div>
