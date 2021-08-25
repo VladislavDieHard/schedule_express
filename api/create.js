@@ -3,6 +3,7 @@ const crypto = require("../modules/crypto")
 
 async function create(req, permissions) {
     return new Promise(function (resolve, reject) {
+        console.log(req)
         if (contains(Object.keys(req.data), permissions[req.model])) {
             try {
                 if (req.data.password){

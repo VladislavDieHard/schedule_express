@@ -12,54 +12,98 @@ class RequestPayload{
     }
 }
 
-class Get extends RequestPayload{
-    async getAll(parameters){
+class Api extends RequestPayload{
+    async getApi(parameters){
         this.api = 'api/get'
         this.method = 'getAll';
         this.where  = parameters;
         return await this.response()
     }
+    async updateUserApi(id, password){
+        this.api    = 'api/update/item'
+        this.where  = {id : id};
+        this.data   = {password : password}
+        return await this.response()
+    }
+
+    async createUserApi(id, log, pas){
+        this.api    = 'api/create/item'
+        this.data   = {
+            SchoolId  : id,
+            login     : log,
+            password  : pas,
+        }
+        return await this.response()
+    }
+    async updateApi(id, name){
+        this.api    = 'api/update/item'
+        this.where  = {id : id};
+        this.data   = {name : name}
+        return await this.response()
+    }
+    async createApi(id, nam){
+        this.api    = 'api/create/item'
+        this.data   = {
+            SchoolId  : id,
+            name      : nam,
+        }
+        return await this.response()
+    }
 }
-
-// class Update extends RequestPayload{
-//     async update(parameters, data){
-//         this.api = 'api/update/item'
-//         this.data = data;
-//         this.where  = parameters;
-//         return await this.response()
-//     }
-// }
-
-class User extends Get{
+class User extends Api{
     async get(parameters){
         this.model = "User"
-        return await this.getAll(parameters)
+        return await this.getApi(parameters)
+    }
+    async update(parameters, name){
+        this.model = "User"
+        return await this.updateUserApi(parameters, name)
+    }
+    async create(id, login, password){
+        this.model = "User"
+        return await this.createUserApi(id, login, password)
     }
 }
-
-class Teacher extends Get{
+class Teacher extends Api{
     async get(parameters){
         this.model = "Teacher"
-        return await this.getAll(parameters)
+        return await this.getApi(parameters)
+    }
+    async update(parameters, name){
+        this.model = "Teacher"
+        return await this.updateApi(parameters, name)
+    }
+    async create(id, name){
+        this.model = "Teacher"
+        return await this.createApi(id, name)
     }
 }
-
-class Lesson extends Get{
+class Lesson extends Api{
     async get(parameters){
         this.model = "Lesson"
-        return await this.getAll(parameters)
+        return await this.getApi(parameters)
+    }
+    async update(parameters, name){
+        this.model = "Lesson"
+        return await this.updateApi(parameters, name)
+    }
+    async create(id, name){
+        this.model = "Lesson"
+        return await this.createApi(id, name)
     }
 }
-
-class Class extends Get{
+class Class extends Api{
     async get(parameters){
         this.model = "Class"
-        return await this.getAll(parameters)
+        return await this.getApi(parameters)
+    }
+    async update(parameters, name){
+        this.model = "Class"
+        return await this.updateApi(parameters, name)
+    }
+    async create(id, name){
+        this.model = "Class"
+        return await this.createApi(id, name)
     }
 }
-
-// const get = new User()
-// get.get().then(console.log)
-
-
 
