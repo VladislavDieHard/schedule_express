@@ -8,7 +8,6 @@ async function create(req, permissions) {
                 if (req.data.password){
                     let password = req.data.password
                     req.data.password= crypto.cipherPass(password)
-                    console.log(req)
                 }
                 sequelize.models[req.model].create(req.data)
                     .then((result) => {resolve(result)})
