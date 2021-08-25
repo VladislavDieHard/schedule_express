@@ -21,7 +21,7 @@ async function create(req, permissions) {
             reject(new Error('Have not permission for model attributes'));
         }
     });
-}
+} 
 
 function contains(where, what) {
     for ( let i=0; i < what.length; i++ ) {

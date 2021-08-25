@@ -66,4 +66,4 @@ async function manage() {
     }
 }
 
-manage().then(console.log).catch(console.log);
+manage()
