@@ -125,6 +125,7 @@ const index = {
     },
 
     async get(req) {
+        console.log(req)
         return new Promise(async (resolve, reject) => {
             let getMethods = {
                 'getOne': get.getOne,

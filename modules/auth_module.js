@@ -7,7 +7,7 @@ const auth = {
             where: {
                 login: user.login
             },
-            attributes: ['login', 'password', 'isAdmin', 'isDeleted']
+            attributes: ['login', 'password', 'isAdmin', 'isDeleted', 'id']
         });
         if (dbUserData === null) {return null;}
         let dbUser = dbUserData.dataValues;
@@ -24,7 +24,8 @@ const auth = {
                     {
                         login: dbUser.login,
                         token: token,
-                        adminPermissions: dbUser.isAdmin
+                        adminPermissions: dbUser.isAdmin,
+                        UserId: dbUser.id
                     }
                 )
 
@@ -42,7 +43,7 @@ const auth = {
             where: {
                 token: token
             },
-            attributes: ['login', 'createdAt']
+            attributes: ['id', 'login', 'updatedAt']
         });
         let authenticated = {};
         if (sessionData === null) {return authenticated.verify = false;}
@@ -50,9 +51,10 @@ const auth = {
 
         if (session !== undefined && session !== null) {
             const sessionTime = 1000 * 60 * process.env['SESSION_TIME'];
-            const sessionDate = +new Date(session.createdAt);
-            const now = +new Date();
-            if (((now - sessionDate) / 1000 / 60) <= (sessionTime / 1000 / 60)) {
+            const sessionDate = +new Date(session.updatedAt);
+            const now = new Date();
+            if (((+now - sessionDate) / 1000 / 60) <= (sessionTime / 1000 / 60)) {
+                await sequelize.models.Session.update({id: sessionData.id}, {where: {id: sessionData.id}});
                 authenticated.verify = true;
                 authenticated.login = session.login;
                 return authenticated

@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const cryptoJS = require('crypto-js');
 require('dotenv').config();
 
 const cryptography = {
@@ -6,28 +6,16 @@ const cryptography = {
         let login = user.login;
         let dateTime = new Date().toISOString();
         let token = `${login}/${dateTime}`;
-
-        return crypto.createHmac('sha256', process.env['HASH_KEY'])
-            .update(token)
-            .digest('hex');
+        return cryptoJS.SHA256(token).toString();
     },
 
     cipherPass(pass) {
-        const cipher = crypto.createCipher('aes192', process.env['SECRET_KEY']);
-        let encrypted = cipher.update(pass,'utf8','hex');
-
-        encrypted = encrypted + cipher.final('hex');
-
-        return encrypted;
+        return cryptoJS.DES.encrypt(pass, process.env['SECRET_KEY']).toString();
     },
 
     decipherPass(pass) {
-        const decipher = crypto.createDecipher('aes192', process.env['SECRET_KEY']);
-        let decrypted = decipher.update(pass,'hex','utf8');
-
-        decrypted = decrypted + decipher.final('utf8');
-
-        return decrypted;
+        let bytes = cryptoJS.DES.decrypt(pass, process.env['SECRET_KEY']);
+        return bytes.toString(cryptoJS.enc.Utf8);
     }
 }
 

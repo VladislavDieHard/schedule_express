@@ -8,7 +8,6 @@ async function create(req, permissions) {
                 if (req.data.password){
                     let password = req.data.password
                     req.data.password= crypto.cipherPass(password)
-                    console.log(req)
                 }
                 sequelize.models[req.model].create(req.data)
                     .then((result) => {resolve(result)})
@@ -21,7 +20,7 @@ async function create(req, permissions) {
             reject(new Error('Have not permission for model attributes'));
         }
     });
-}
+} 
 
 function contains(where, what) {
     for ( let i=0; i < what.length; i++ ) {
