@@ -187,6 +187,9 @@ const TeacherToLesson = sequelize.define(
 School.hasMany(User);
 User.belongsTo(School);
 
+User.hasMany(Session);
+Session.belongsTo(User);
+
 School.hasMany(Lesson);
 Lesson.belongsTo(School);
 
