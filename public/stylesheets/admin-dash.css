@@ -21,6 +21,7 @@ a {
 .tabs-item {
   display: block;
   line-height: 50px;
+  width: 100%;
   background-color: #008585;
   text-decoration: none;
   text-align: center;
@@ -43,11 +44,15 @@ a {
   height: 95vh;
   overflow: scroll; }
 
+.create-data {
+  background-color: #00B2B2; }
+
 .accordion {
   width: 100%; }
 
 .panel {
   background-color: #fff;
+  border: 1px solid #000000;
   display: none; }
 
 .panel.show {

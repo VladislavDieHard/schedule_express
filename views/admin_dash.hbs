@@ -11,37 +11,21 @@
             <div class="sidebar-content">
                 <div class="sidebar-item">
                     <nav class="tabs-items">
-                        <a href="#tab_01" class="tabs-item">User</a>
-                        <a href="#tab_02" class="tabs-item">Teacher</a>
-                        <a href="#tab_03" class="tabs-item">Lesson</a>
-                        <a href="#tab_04" class="tabs-item">Class</a>
+                        <button onclick="addData.getData('User'),    addData.deleteData()" class="tabs-item" >User</button>
+                        <button onclick="addData.getData('Teacher'), addData.deleteData()" class="tabs-item" >Teacher</button>
+                        <button onclick="addData.getData('Lesson'),  addData.deleteData()" class="tabs-item" >Lesson</button>
+                        <button onclick="addData.getData('Class'),   addData.deleteData()" class="tabs-item" >Class</button>
                     </nav>
                 </div>
             </div>
         </div>
-            <div class="content">
-                <script>
-                    function accordionDown() {
-                        let accordion = document.getElementsByClassName('accordion')
-                        for(let i = 0; i < accordion.length; i++){
-                            accordion[i].onclick = function () {
-                                this.classList.toggle('active')
-                                this.nextElementSibling.classList.toggle('show')
-                            }
-                        }
-                    }
-                </script>
-                <div id="tab_01" class="user-content tabs" ></div>
-                <div id="tab_02" class="teacher-content tabs" ></div>
-                <div id="tab_03" class="lesson-content tabs" ></div>
-                <div id="tab_04" class="class-content tabs" ></div>
+            <div class="content" id="content">
+                <div class="create-data">
+
+                </div>
+                <div class="content-item" id="content-item"></div>
             </div>
         </div>
     </div>
-   <body onload="
-   addData.getDataUser('User')
-   addData.getData('Teacher', 'tab_02')
-   addData.getData('Lesson', 'tab_03')
-   addData.getData('Class', 'tab_04')
-"></body>
 </div>
+
