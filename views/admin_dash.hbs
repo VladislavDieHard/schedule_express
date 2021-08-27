@@ -11,7 +11,7 @@
             <div class="sidebar-content">
                 <div class="sidebar-item">
                     <nav class="tabs-items">
-                        <button onclick="addData.getData('User'),    addData.deleteData()" class="tabs-item" >User</button>
+                        <button onclick="addData.getData('User'),    addData.deleteData(), addData.accordionDown()" class="tabs-item" >User</button>
                         <button onclick="addData.getData('Teacher'), addData.deleteData()" class="tabs-item" >Teacher</button>
                         <button onclick="addData.getData('Lesson'),  addData.deleteData()" class="tabs-item" >Lesson</button>
                         <button onclick="addData.getData('Class'),   addData.deleteData()" class="tabs-item" >Class</button>
@@ -19,12 +19,11 @@
                 </div>
             </div>
         </div>
-            <div class="content" id="content">
-                <div class="create-data">
+        <div class="createItem">
 
-                </div>
-                <div class="content-item" id="content-item"></div>
-            </div>
+        </div>
+        <div class="content" id="content">
+            <div class="content-item" id="content-item"></div>
         </div>
     </div>
 </div>

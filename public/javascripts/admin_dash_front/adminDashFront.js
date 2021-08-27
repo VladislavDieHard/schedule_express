@@ -5,21 +5,35 @@ const addData = {
         data.forEach(element => addData.dataOutput(element, model))
     },
     async updateData(id){
-        let model   = document.getElementById(`model`).value
+        let model     = document.getElementById(`model`).value
         let inputData = document.getElementById(`input-data${id}`).value
-        let req = models[model]
+        let req       = models[model]
         req.update(id, inputData)
-
-
+    },
+    async createData(){
+        let model    = document.getElementById('model').value
+        if(model == 'User'){
+            let login    = document.getElementById('login').value
+            let password = document.getElementById('password').value
+            let schoolId = document.getElementById('SchoolId').value
+            let req      = models[model]
+            req.create(schoolId, login, password)
+        }
+        else{
+            let name     = document.getElementById('name').value
+            let schoolId = document.getElementById('SchoolId').value
+            let req      = models[model]
+            req.create(schoolId, name)
+        }
     },
     async deleteData(){
         if(document.getElementById('accordion')){
-            let contentItem = document.getElementById('content-item')
+            let contentItem      = document.getElementById('content-item')
+            let content          = document.getElementById('content')
+            let newContentItem   = document.createElement('div')
             contentItem.remove()
-            let content = document.getElementById('content')
-            let child   = document.createElement('div')
-            child.id = 'content-item'
-            content.appendChild(child)
+            newContentItem.id = 'content-item'
+            content.appendChild(newContentItem)
         }
 
     },
@@ -34,11 +48,57 @@ const addData = {
     },
     async dataOutput(data, model, name, updateData) {
         let contentItem      = document.getElementById('content-item')
+        let createData       = document.createElement('div')
         let accordion        = document.createElement('button')
         let accordionContent = document.createElement('div')
+        createData.className = 'create-data'
+        createData.id = 'create-data'
 
-        if(data.login) name = data.login, updateData = 'Пароль'
-        else name = data.name, updateData = 'Имя'
+        if(data.login) {
+            if(!document.getElementById('create-data')){                
+                createData.innerHTML = `
+                <table>
+                    <tr>
+                        <td>Логин</td>
+                        <td><input id="login"></td>                        
+                        <td>Модель</td>
+                        <td><input disabled value="${model}" id="model"></td>   
+                    </tr>
+                    <tr>     
+                        <td>Пароль</td>
+                        <td><input id="password"></td>
+                        <td>SchoolId</td>
+                        <td><input id="SchoolId"></td>                       
+                        <td colspan="2"><button onclick="addData.createData()">Create</button></td>
+                    </tr>
+                </table>`
+                contentItem.appendChild(createData)
+            }
+            name = data.login
+            updateData = 'Пароль'
+        }
+        else {
+            if(!document.getElementById('create-data')){
+                createData.innerHTML = `
+                <table>
+                    <tr>
+                        <td>Имя</td>
+                        <td><input id="name"></td>
+                        <td>Модель</td>
+                        <td><input disabled value="${model}" id="model"></td>                        
+                    </tr>
+                    <tr>
+                        <td>SchoolId</td>
+                        <td><input id="SchoolId"></td>                    
+                        <td colspan="2"><button onclick='addData.createData()'>Create</button></td>
+                    </tr>
+                </table>`
+                contentItem.appendChild(createData)
+            }
+
+            name = data.name
+            updateData = 'Имя'
+        }
 
         accordion.className = 'accordion'
         accordion.id = 'accordion'
@@ -77,10 +137,10 @@ const addData = {
                                                 </td>
                                            </tr>
                                        </table>`
+
         contentItem.appendChild(accordion)
         contentItem.appendChild(accordionContent)
     },
-
 }
 
 const models = {
