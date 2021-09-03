@@ -12,7 +12,6 @@ const addData = {
     async update(model){
         let req = table[model]
         let data = await req.update()
-        await console.log(data)
     },
     async dataOutputUser(data, model){
         let parent = document.getElementById('teacherId')

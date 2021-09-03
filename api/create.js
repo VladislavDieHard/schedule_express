@@ -13,7 +13,6 @@ async function create(req, permissions) {
                     .then((result) => {resolve(result)})
                     .catch((e) => {reject(e)})
             } catch (e) {
-
                 reject(e);
             }
         } else {

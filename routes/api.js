@@ -41,7 +41,7 @@ router.post('/delete/item', async (req, res) => {
 router.post('/delete/relation', async (req, res) => {
     await api.deleteRelation(req.body)
         .then((result) => {res.send(result)})
-        .catch((e) => {res.send(e.message)});
+        .catch((e) => {res.send(e)});
 });
 
 module.exports = router;

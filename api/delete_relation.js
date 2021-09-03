@@ -6,7 +6,7 @@ function deleteRelation(req) {
         let toModel = await sequelize.models[req.toModel.name].findOne({where: {id: req.toModel.id}});
 
         fromModel.removeRelation(toModel)
-            .then((result) => {resolve(result)})
+            .then((result) => {resolve(Boolean(result))})
             .catch((err) => {reject(err)});
     })
 }

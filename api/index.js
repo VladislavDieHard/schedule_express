@@ -38,45 +38,17 @@ const index = {
 
     async deleteRelation(req) {
         return new Promise((resolve, reject) => {
-            if (checkPermission(req.token)) {
-                if (this.permissions.admin.availableModels.includes(req.model)) {
-                    deleteRelation(req)
-                        .then((result) => {resolve(result)})
-                        .catch((err) => {reject(err)});
-                } else {
-                    reject(new Error('Not permission for model'));
-                }
-            } else {
-                if (this.permissions.user.availableModels.includes(req.model)) {
-                    deleteRelation(req)
-                        .then((result) => {resolve(result)})
-                        .catch((err) => {reject(err)});
-                } else {
-                    reject(new Error('Not permission for model'));
-                }
-            }
+            deleteRelation(req)
+                .then((result) => {resolve(result)})
+                .catch((err) => {reject(err)});
         });
     },
 
     async createRelation(req) {
         return new Promise((resolve, reject) => {
-            if (checkPermission(req.token)) {
-                if (this.permissions.admin.availableModels.includes(req.model)) {
-                    createRelation(req)
-                        .then((result) => {resolve(result)})
-                        .catch((err) => {reject(err)});
-                } else {
-                    reject(new Error('Not permission for model'));
-                }
-            } else {
-                if (this.permissions.user.availableModels.includes(req.model)) {
-                    createRelation(req)
-                        .then((result) => {resolve(result)})
-                        .catch((err) => {reject(err)});
-                } else {
-                    reject(new Error('Not permission for model'));
-                }
-            }
+            createRelation(req)
+                .then((result) => {resolve(result)})
+                .catch((err) => {reject(err)});
         });
     },
 
@@ -125,7 +97,6 @@ const index = {
     },
 
     async get(req) {
-        console.log(req)
         return new Promise(async (resolve, reject) => {
             let getMethods = {
                 'getOne': get.getOne,
