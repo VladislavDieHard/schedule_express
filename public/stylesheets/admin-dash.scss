@@ -1,115 +1,66 @@
-.wrapper {
-  width: 100%; }
+a{
+  text-decoration: none;
+  color: #fff;
+}
 
-.header {
+.header{
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  width: 100%;
   height: 5vh;
-  background-color: #37508E;
+  background-color: #006262;
+  color: #fff;
 }
 
-.user-input {
-  margin-left: 40px; }
-
-.user-choose {
-  width: 150px;
-  height: 20px; }
-
-.sidebar-left {
-  height: 95vh;
-  width: 25%;
-  background-color: #37506A;
-}
-
-.buttons-objects button {
-  width: 100%; }
-
-.content {
+.main{
   display: flex;
 }
 
-.object-content {
-  width: 100%;
-  background-color: #EDEDED;
-  overflow: scroll;
+.sidebar{
+  width: 15%;
   height: 95vh;
+  background-color: #009494;
 }
 
-// ==Аккордион==
-button.accordion{
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  text-align: left;
-  border: 1px solid #37506A;
-  outline: none;
+.tabs-item{
+  display: block;
+  line-height: 50px;
+  background-color: #008585;
+  text-decoration: none;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #00A0A0;
   transition: .4s;
 }
 
-button.accordion.active,
-button.accordion:hover{
-  background-color: #ddd;
+.tabs-item:hover{
+  background-color: #00B2B2;
 }
 
-div.panel{
-  padding: 0 18px;
-  background-color: white;
+.tabs{
   display: none;
 }
 
-div.panel.show{
+.tabs:target{
   display: block;
 }
 
-
-.element{
-  border: 2px solid #37506A;
-  background-color: #ffffff;
-  padding: 5px;
-  margin: 10px;
+.content{
+  background-color: #9AD5D5;
+  width: 85%;
+  height: 95vh;
+  overflow: scroll;
 }
 
-.btn {
-  width: 100px;
-  height: 40px;
-  background-color: white;
-  color: black;
-  border: 2px solid #555555;
-  transition: 200ms;
-  cursor: pointer; }
+.accordion{
+  width: 100%;
+}
 
-.btn:hover {
-  background-color: #555555;
-  color: white;
-  transition: 200ms; }
-
-.object-item {
+.panel{
+  background-color: #fff;
   display: none;
-  width: 100%;
-  height: 100%; }
+}
 
-.object-item-active {
+.panel.show{
   display: block;
-  width: 100%;
-  height: 100%; }
-
-.update-input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 10%; }
-
-.update-menu {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 90%; }
-
-/*# sourceMappingURL=admin-dash.css.map */
+}

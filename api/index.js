@@ -38,17 +38,21 @@ const index = {
 
     async deleteRelation(req) {
         return new Promise((resolve, reject) => {
-            deleteRelation(req)
-                .then((result) => {resolve(result)})
-                .catch((err) => {reject(err)});
+            if (checkPermission(req.token)) {
+                deleteRelation(req)
+                    .then((result) => {resolve(result)})
+                    .catch((err) => {reject(err)});
+            }
         });
     },
 
     async createRelation(req) {
         return new Promise((resolve, reject) => {
-            createRelation(req)
-                .then((result) => {resolve(result)})
-                .catch((err) => {reject(err)});
+            if (checkPermission(req.token)) {
+                createRelation(req)
+                    .then((result) => {resolve(result)})
+                    .catch((err) => {reject(err)});
+            }
         });
     },
 
@@ -97,6 +101,7 @@ const index = {
     },
 
     async get(req) {
+        console.log(req)
         return new Promise(async (resolve, reject) => {
             let getMethods = {
                 'getOne': get.getOne,

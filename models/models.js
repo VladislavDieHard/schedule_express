@@ -201,6 +201,10 @@ Class.belongsTo(School);
 
 Class.belongsToMany(Lesson, {as: 'Relation', through: ClassToLesson});
 Lesson.belongsToMany(Class, {through: ClassToLesson});
+ClassToLesson.belongsTo(Class);
+ClassToLesson.belongsTo(Lesson);
+Class.hasMany(ClassToLesson);
+Lesson.hasMany(ClassToLesson);
 
 Teacher.belongsToMany(Lesson, {as: 'Relation', through: TeacherToLesson});
 Lesson.belongsToMany(Teacher, {through: TeacherToLesson});
