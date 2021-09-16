@@ -1,16 +1,16 @@
 const addData = {
     async getDataUser(model, path){
-        let req  = table[model]
+        let req  = models[model]
         let data = await req.get()
         data.forEach(element => this.dataOutputUser(element, model))
     },
     async getData(model, path){
-        let req  = table[model]
+        let req  = models[model]
         let data = await req.get()
         data.forEach(element => this.dataOutput(element, model, path))
     },
     async update(model){
-        let req = table[model]
+        let req = models[model]
         let data = await req.update()
     },
     async dataOutputUser(data, model){
@@ -100,11 +100,4 @@ const addData = {
                                       <button onclick="deleteData(${data.id})">Delete</button>`)
         parent.appendChild(elementCont)
     }
-}
-
-const table = {
-    'User'    : new User(),
-    'Teacher' : new Teacher(),
-    'Class'   : new Class(),
-    'Lesson'  : new Lesson(),
 }

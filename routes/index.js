@@ -21,10 +21,10 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   const user = req.body;
-  const token = await auth.auth(user);
+  const authObj = await auth.auth(user);
 
-  if (token !== null) {
-    res.send(token);
+  if (authObj !== null) {
+    res.send(authObj);
   } else {
     res.send(null);
   }

@@ -25,14 +25,22 @@ const auth = {
             body: JSON.stringify(data),
         });
 
-        let result = await response.text();
-
-        if (result === 'null') {
+        let result = await response.json();
+        if (!result) {
             document.querySelector('.err-text').innerHTML = 'Вы ввели неверный логин или пароль'
         } else {
-            document.cookie = `token=${result}`;
+            setCookie('token', result.token);
+            setCookie('schoolId', result.schoolId);
+            setCookie('isAdmin', result.isAdmin);
             document.location.href = '/redirect';
         }
+    },
+
+    exit() {
+        deleteCookie('token');
+        deleteCookie('schoolId');
+        deleteCookie('isAdmin');
+        document.location.href = '/';
     },
 
     controller(el, call) {
@@ -40,6 +48,8 @@ const auth = {
             this.getData(el);
         } else if (call === 1) {
             this.authMethod();
+        } else if (call === 2) {
+            this.exit()
         }
     }
 }

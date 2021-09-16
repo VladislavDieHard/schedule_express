@@ -4,7 +4,7 @@ const get = {
     getOne(req, permission) {
         return new Promise((resolve, reject) => {
             sequelize.models[req.model].findOne({
-                where: req.where,
+                where: {...req.where, isDeleted: false},
                 attributes: permission[req.model],
                 include: req.include
             }).toJSON()
@@ -16,7 +16,7 @@ const get = {
     getAll(req, permission) {
         return new Promise((resolve, reject) => {
             sequelize.models[req.model].findAll({
-                where: req.where,
+                where: {...req.where, isDeleted: false},
                 attributes: permission[req.model],
                 include: req.include
             })

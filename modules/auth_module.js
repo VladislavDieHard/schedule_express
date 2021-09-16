@@ -6,8 +6,7 @@ const auth = {
         let dbUserData = await sequelize.models.User.findOne({
             where: {
                 login: user.login
-            },
-            attributes: ['login', 'password', 'isAdmin', 'isDeleted', 'id']
+            }
         });
         if (dbUserData === null) {return null;}
         let dbUser = dbUserData.dataValues;
@@ -30,12 +29,16 @@ const auth = {
                 )
 
             } else {
-                token = null;
+                return null;
             }
         } else {
-            token = null;
+            return  null;
         }
-        return token;
+        return {
+            token: token,
+            schoolId: dbUser.SchoolId,
+            isAdmin: dbUser.isAdmin
+        };
     },
 
     async authUser(token) {

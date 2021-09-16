@@ -1,6 +1,6 @@
-class RequestPayload{
+class FetchApi{
     constructor() {
-        this.token   = document.cookie.split("; ")[0].split("=")[1];
+        this.token   = getCookie('token');
     }
     async response(){
         let response = await fetch(this.api, {
@@ -12,11 +12,12 @@ class RequestPayload{
     }
 }
 
-class Api extends RequestPayload{
-    async getApi(parameters){
+class Api extends FetchApi{
+    async getApi(parameters, include){
         this.api = 'api/get'
         this.method = 'getAll';
         this.where  = parameters;
+        this.include = include;
         return await this.response()
     }
     async updateUserApi(id, password){
@@ -25,7 +26,6 @@ class Api extends RequestPayload{
         this.data   = {password : password}
         return await this.response()
     }
-
     async createUserApi(id, log, pas){
         this.api    = 'api/create/item'
         this.data   = {
@@ -41,19 +41,25 @@ class Api extends RequestPayload{
         this.data   = {name : name}
         return await this.response()
     }
-    async createApi(id, nam){
+    async createApi(id, name){
         this.api    = 'api/create/item'
         this.data   = {
             SchoolId  : id,
-            name      : nam,
+            name      : name,
         }
         return await this.response()
     }
+    async createRelationApi() {
+        this.api    = 'api/create/relation'
+    }
+    async removeRelationApi() {
+        this.api    = 'api/delete/relation'
+    }
 }
 class User extends Api{
-    async get(parameters){
+    async get(parameters, include){
         this.model = "User"
-        return await this.getApi(parameters)
+        return await this.getApi(parameters, include)
     }
     async update(parameters, name){
         this.model = "User"
@@ -65,9 +71,9 @@ class User extends Api{
     }
 }
 class Teacher extends Api{
-    async get(parameters){
+    async get(parameters, include){
         this.model = "Teacher"
-        return await this.getApi(parameters)
+        return await this.getApi(parameters, include)
     }
     async update(parameters, name){
         this.model = "Teacher"
@@ -79,9 +85,9 @@ class Teacher extends Api{
     }
 }
 class Lesson extends Api{
-    async get(parameters){
+    async get(parameters, include){
         this.model = "Lesson"
-        return await this.getApi(parameters)
+        return await this.getApi(parameters, include)
     }
     async update(parameters, name){
         this.model = "Lesson"
@@ -93,9 +99,9 @@ class Lesson extends Api{
     }
 }
 class Class extends Api{
-    async get(parameters){
+    async get(parameters, include){
         this.model = "Class"
-        return await this.getApi(parameters)
+        return await this.getApi(parameters, include)
     }
     async update(parameters, name){
         this.model = "Class"
@@ -106,4 +112,23 @@ class Class extends Api{
         return await this.createApi(id, name)
     }
 }
+class Relation extends Api{
+    async add(from, to){
+        this.fromModel = from;
+        this.toModel = to;
+        return await this.createRelationApi()
+    }
+    async remove(from, to){
+        this.fromModel = from;
+        this.toModel = to;
+        return await this.removeRelationApi()
+    }
+}
 
+const models = {
+    Class: new Class(),
+    Lesson: new Lesson(),
+    Teacher: new Teacher(),
+    User: new User(),
+    Relation: new Relation()
+}

@@ -21,10 +21,6 @@ router.get('/', async function(req, res, next) {
                 title: 'Расписание',
                 username: user.login,
                 user: JSON.stringify(user),
-                school: JSON.stringify({
-                    id: school.id,
-                    name: school.name
-                })
             });
         } else {
             res.redirect('/');
