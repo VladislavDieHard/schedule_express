@@ -36,6 +36,7 @@ const auth = {
         }
         return {
             token: token,
+            login: dbUser.login,
             schoolId: dbUser.SchoolId,
             isAdmin: dbUser.isAdmin
         };

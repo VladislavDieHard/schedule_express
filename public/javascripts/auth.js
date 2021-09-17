@@ -30,6 +30,7 @@ const auth = {
             document.querySelector('.err-text').innerHTML = 'Вы ввели неверный логин или пароль'
         } else {
             setCookie('token', result.token);
+            setCookie('login', result.login);
             setCookie('schoolId', result.schoolId);
             setCookie('isAdmin', result.isAdmin);
             document.location.href = '/redirect';
@@ -38,6 +39,7 @@ const auth = {
 
     exit() {
         deleteCookie('token');
+        deleteCookie('login');
         deleteCookie('schoolId');
         deleteCookie('isAdmin');
         document.location.href = '/';
