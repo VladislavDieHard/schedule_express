@@ -35,17 +35,17 @@ class Api extends FetchApi{
         }
         return await this.response()
     }
-    async updateApi(id, name){
+    async updateApi(id, data){
         this.api    = 'api/update/item'
         this.where  = {id : id};
-        this.data   = {name : name}
+        this.data   = data
         return await this.response()
     }
-    async createApi(id, name){
+    async createApi(data){
         this.api    = 'api/create/item'
         this.data   = {
-            SchoolId  : id,
-            name      : name,
+            SchoolId  : getCookie('schoolId'),
+            ...data
         }
         return await this.response()
     }
@@ -79,9 +79,9 @@ class Teacher extends Api{
         this.model = "Teacher"
         return await this.updateApi(parameters, name)
     }
-    async create(id, name){
+    async create(data){
         this.model = "Teacher"
-        return await this.createApi(id, name)
+        return await this.createApi(data)
     }
 }
 class Lesson extends Api{
@@ -89,13 +89,13 @@ class Lesson extends Api{
         this.model = "Lesson"
         return await this.getApi(parameters, include)
     }
-    async update(parameters, name){
+    async update(parameters, data){
         this.model = "Lesson"
-        return await this.updateApi(parameters, name)
+        return await this.updateApi(parameters, data)
     }
-    async create(id, name){
+    async create(data){
         this.model = "Lesson"
-        return await this.createApi(id, name)
+        return await this.createApi(data)
     }
 }
 class Class extends Api{
@@ -103,13 +103,13 @@ class Class extends Api{
         this.model = "Class"
         return await this.getApi(parameters, include)
     }
-    async update(parameters, name){
+    async update(parameters, data){
         this.model = "Class"
-        return await this.updateApi(parameters, name)
+        return await this.updateApi(parameters, data)
     }
-    async create(id, name){
+    async create(data){
         this.model = "Class"
-        return await this.createApi(id, name)
+        return await this.createApi(data)
     }
 }
 class Relation extends Api{
