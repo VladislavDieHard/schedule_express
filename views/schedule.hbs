@@ -1,37 +1,10 @@
 <script src="javascripts/schedule/schedule-front.js"></script>
+<script src="javascripts/api.js"></script>
+<script src="javascripts/localstorage.js"></script>
 <script src="javascripts/data_update.js"></script>
 
-<h3>{{title}}</h3>
-<button class="exit-btn" onclick="authApi('', 2)">Выход</button>
-<h3 class="user-login">{{username}}</h3>
-<div class="user-data" data-user="{{user}}"></div>
-<div class="school-data" data-school="{{school}}"></div>
-<div class="teachers-data" data-teachers="{{teachersData}}"></div>
-<div class="lessons-data" data-lessons="{{lessonsData}}"></div>
-<div class="classes-data" data-classes="{{classesData}}"></div>
-<div class="objects">
-    <div class="objects-switch-buttons">
-        <button class="teachers-button objects-button"><i class="fas fa-user"></i>Учителя</button>
-        <button class="lessons-button objects-button"><i class="fas fa-book"></i>Уроки</button>
-    </div>
-    <div class="objects-list">
-        <div class="teachers">
-            <ul class="teachers-list">
-            </ul>
-        </div>
-        <div class="lessons">
-            <ul class="lessons-list"></ul>
-        </div>
-    </div>
+<div id="app">
+    <app-header></app-header>
+    <info-table></info-table>
 </div>
-<button onclick="scheduleApi(0)">Обновить учителей</button>
-<div class="add-item-to-db">
-    <input class="item-type" list="item-type">
-    <datalist id="item-type">
-        <option value="Учитель">
-        <option value="Урок">
-        <option value="Класс">
-    </datalist>
-    <input type="text" class="add-item-to-db-input">
-    <button onclick="scheduleApi(2)">Добавить</button>
-</div>
+<script src="javascripts/schedule/app.js"></script>

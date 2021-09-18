@@ -15,7 +15,7 @@ async function dataUpdate() {
     }
 
     let serverData;
-    if (getCookie('isAdmin')) {
+    if (JSON.parse(getCookie('isAdmin'))) {
         serverData = {
             classes: await models.Class.get(adminParams, 'Relation'),
             teachers: await models.Teacher.get(adminParams, 'Relation'),
