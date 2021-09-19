@@ -24,21 +24,44 @@ app.component('app-header', {
 app.component('info-table', {
     data() {
         return {
-            teachers: saveLocal.get('teachers'),
-            classes: saveLocal.get('classes'),
-            lessons: saveLocal.get('lessons'),
-            teacher: new Teacher(),
-            klass: new Class(),
-            lesson: new Lesson(),
+            objects: [
+                {
+                    name: 'teacher',
+                    mName: 'teachers',
+                    data: saveLocal.get('teachers'),
+                    instance: new Teacher(),
+                    objectTitle: 'ФИО',
+                    popType: 'ФИО преподователя',
+                    popTitle: 'Добавить учителя'
+                },
+                {
+                    name: 'class',
+                    mName: 'classes',
+                    data: saveLocal.get('classes'),
+                    instance: new Class(),
+                    objectTitle: 'Класс',
+                    popType: 'Номер класса',
+                    popTitle: 'Добавить класс'
+                },
+                {
+                    name: 'lesson',
+                    mName: 'lessons',
+                    data: saveLocal.get('lessons'),
+                    instance: new Lesson(),
+                    objectTitle: 'Предмет',
+                    popType: 'Название предмета',
+                    popTitle: 'Добавить предмет'
+                }
+            ],
             picked: 'classes',
             popup: false
         }
     },
     mounted() {
         setInterval(() => {
-            this.teachers =  saveLocal.get('teachers');
-            this.classes =  saveLocal.get('classes');
-            this.lessons =  saveLocal.get('lessons');
+            this.objects[0].data =  saveLocal.get('teachers');
+            this.objects[1].data =  saveLocal.get('classes');
+            this.objects[2].data =  saveLocal.get('lessons');
         }, 1000);
     },
     methods: {
@@ -56,63 +79,29 @@ app.component('info-table', {
                 <input type="radio" id="lessons" value="lessons" v-model="picked">
                 <label for="lessons">Уроки</label>
             </div>
-            <ul>
+            <ul v-for="object in objects">
                 <object-list
-                        v-if="picked === 'classes'"
-                        v-for="item in classes"
+                        v-if="picked === object.mName"
+                        v-for="item in object.data"
                         v-bind:item="item"
-                        v-bind:key="item.id"
-                        v-bind:title="'Класс'"
-                        v-bind:model="klass"
+                        v-bind:title="object.objectTitle"
+                        v-bind:model="object.instance"
                 ></object-list>
                 <add-popup
-                        v-if="picked === 'classes'"
-                        v-bind:type="'Номер класса'"
-                        v-bind:title="'Добавить класс'"
-                        v-bind:model="klass"
-                ></add-popup>
-            </ul>
-            <ul>
-                <object-list
-                        v-if="picked === 'teachers'"
-                        v-for="item in teachers"
-                        v-bind:item="item"
-                        v-bind:key="item.id"
-                        v-bind:title="'ФИО'"
-                        v-bind:model="teacher"
-                ></object-list>
-                <add-popup
-                        v-if="picked === 'teachers'"
-                        v-bind:type="'ФИО учителя'"
-                        v-bind:title="'Добавить учителя'"
-                        v-bind:model="teacher"
-                ></add-popup>
-            </ul>
-            <ul>
-                <object-list
-                        v-if="picked === 'lessons'"
-                        v-for="item in lessons"
-                        v-bind:item="item"
-                        v-bind:key="item.id"
-                        v-bind:title="'Предмет'"
-                        v-bind:model="lesson"
-                ></object-list>
-                <add-popup
-                        v-if="picked === 'lessons'"
-                        v-bind:type="'Название предмета'"
-                        v-bind:title="'Добавить предмет'"
-                        v-bind:model="lesson"
+                        v-if="picked === object.mName"
+                        v-bind:type="object.popType"
+                        v-bind:title="object.popTitle"
+                        v-bind:model="object.instance"
                 ></add-popup>
             </ul>
         </div>
-    `,
+    `
 });
 
 app.component('object-list', {
     props: {
         item: Object,
         title: String,
-        key: Number,
         model: Object
     },
     methods: {
