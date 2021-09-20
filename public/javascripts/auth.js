@@ -37,21 +37,11 @@ const auth = {
         }
     },
 
-    exit() {
-        deleteCookie('token');
-        deleteCookie('login');
-        deleteCookie('schoolId');
-        deleteCookie('isAdmin');
-        document.location.href = '/';
-    },
-
     controller(el, call) {
         if (call === 0) {
             this.getData(el);
         } else if (call === 1) {
             this.authMethod();
-        } else if (call === 2) {
-            this.exit()
         }
     }
 }
